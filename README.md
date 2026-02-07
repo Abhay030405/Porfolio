@@ -1,85 +1,156 @@
-# Welcome to your Lovable project
+# Abhay Agarwal — AI / ML Engineer & Systems Builder
 
-## Project info
+**Electrical Engineer by degree. Machine Learning engineer by practice.**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+This repository contains my interactive developer portfolio, showcasing my work in Machine Learning, Computer Vision, Systems Engineering, and Full-Stack Development.
 
-## How can I edit this code?
+I build end-to-end systems — from research ideas and raw data to deployed applications.
 
-There are several ways of editing your application.
+## Live Portfolio
 
-**Use Lovable**
+Visit here:  
+https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## About Me
 
-Changes made via Lovable will be committed automatically to this repo.
+I'm Abhay Agarwal, a developer and researcher focused on solving real-world problems using Artificial Intelligence and scalable software systems.
 
-**Use your preferred IDE**
+**My primary interests:**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- Machine Learning & Deep Learning
+- Computer Vision & Remote Sensing
+- LLM Reasoning Systems
+- Distributed Systems & Backend Engineering
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+I enjoy working on problems where software meets reasoning, data, and engineering constraints.
 
-Follow these steps:
+## Research Areas
+
+### 🌍 Pixel-Level Landslide Intelligence
+
+Developing semantic segmentation models on satellite imagery to precisely locate landslide-affected terrain instead of simple classification.
+
+### 🧊 Glacier Burst Detection
+
+Analyzing multi-temporal remote sensing data to detect structural changes in glacial lakes and identify potential outburst flood risks.
+
+### 🧠 Multi-Phase Chain-of-Thought LLM Systems
+
+Designing structured reasoning pipelines where LLMs plan, verify, and refine intermediate steps using tool-augmented workflows.
+
+## Technical Stack
+
+### Languages
+
+- Python
+- C / C++
+- JavaScript / TypeScript
+- Java
+
+### Machine Learning
+
+- PyTorch
+- TensorFlow
+- OpenCV
+- HuggingFace Transformers
+- Scikit-learn
+
+### Backend & Systems
+
+- Node.js
+- FastAPI
+- Go (learning & experimentation)
+- REST APIs & microservices
+
+### Frontend
+
+- React
+- Next.js
+- Tailwind CSS
+- shadcn-ui
+
+### Tools & Infrastructure
+
+- Git & GitHub
+- Docker
+- AWS / Cloud deployment
+- PostgreSQL, MongoDB, Redis
+
+## Key Achievements
+
+🏆 **1st Runner-Up** — HACKATRON (IIITM Gwalior) for Cloud-Weaver
+
+🏆 **Winner** — Logical Rhythms ML Event (Codesangam, MNNIT) — Pothole Detection using YOLO
+
+🏅 **Special Mention** — Dev or Die (Avishkar) — Command Nest Operations Platform
+
+🤖 **Winner** — Robo-Wars Combat Robotics Competition
+
+🧠 **Codeforces Rating: 1390 (Pupil)** — 500+ problems solved
+
+## Running Locally
+
+### Prerequisites
+
+- Node.js (v18+ recommended)
+- npm
+
+### Setup
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone repository
 git clone <YOUR_GIT_URL>
 
-# Step 2: Navigate to the project directory.
+# Enter project folder
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Then open:  
+http://localhost:5173
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Project Tech
 
-**Use GitHub Codespaces**
+This portfolio is built using:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
+- React + TypeScript
 - Vite
-- TypeScript
-- React
-- shadcn-ui
 - Tailwind CSS
+- shadcn-ui
 
-## How can I deploy this project?
+## Portfolio Commands
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+Inside the portfolio interface you can type:
 
-## Can I connect a custom domain to my Lovable project?
+```
+about        → Overview about me
+experience   → Work experience
+skills       → Technical skills
+achievements → Competitions & recognitions
+research     → Current research work
+projects     → Built systems & applications
+contact      → How to reach me
+```
 
-Yes, you can!
+## Contact
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+📧 officialabhay030405@gmail.com
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+**LinkedIn:** https://linkedin.com/in/abhay-agarwal-8563352b1/
 
+**GitHub:** https://github.com/Abhay030405
 
+**Codeforces:** https://codeforces.com/profile/absolutabhay
 
-## What to learn more about me ?
-**Type any of these commands:**
-• \`about\` - Get a short overview about me and how I work
-• \`experience\` - View my work experience
-• \`skills\` - See my technical skills
-• \`achievements\` - View my achievements
-• \`research\` - Explore my research
-• \`projects\` - Browse my projects
-• \`contact\` - Get in touch
+**LeetCode:** https://leetcode.com/u/absolutabhay
+
+**Kaggle:** https://kaggle.com/abhayondata
+
+---
+
+I'm always open to research collaborations, ML engineering roles, and interesting technical discussions.
