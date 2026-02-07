@@ -69,13 +69,8 @@ const Sidebar = ({ onNewChat, onSelectSection, activeSection, chatHistory, onSel
   };
 
   const handleDownloadResume = () => {
-    // Create a link element and trigger download
-    const link = document.createElement('a');
-    link.href = '/resume_abhay.pdf';
-    link.download = 'Abhay_Agarwal_Resume.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    // Open Google Drive link in new tab
+    window.open('https://drive.google.com/drive/folders/1ZEBNjCnFSacDxsSu5aGypGHWaXoZ0Mal?usp=sharing', '_blank', 'noopener,noreferrer');
   };
 
   const getSocialIcon = (id: string) => {

@@ -380,7 +380,7 @@ My research workflow follows an engineering-style pipeline:
 ---
 ## Featured Projects
 **1️⃣ Last-Pulse -> AI That Thinks Before Life Stops**
-Developed a comprehensive hospital management system featuring deep learning models for radiology (CNN for X-ray analysis), cardiology (ECG anomaly detection), and pathology (image segmentation)
+*Developed a comprehensive hospital management system featuring deep learning models for radiology (CNN for X-ray analysis), cardiology (ECG anomaly detection), and pathology (image segmentation)*
 January 2026 -- Present(Ongoing)
 [IMAGE:/LastPulse.jpg,/lastPulse2.jpg]
 - Designed role-based clinical workflows enabling doctors and patients to interact with AI-driven diagnoses.
@@ -389,7 +389,6 @@ January 2026 -- Present(Ongoing)
 - Pathology Module: U-Net architecture for segmenting histopathological images.
 - Web Interface: Built with React and FastAPI for seamless user experience.
 - Designed role-based clinical workflows enabling doctors and patients to interact with AI-driven diagnoses.
-
 \`\`\`python
 # Source Code
 GitHub - https://github.com/Abhay030405/Last-Pulse
@@ -404,14 +403,13 @@ technologies = {
 \`\`\`
 ---
 **2️⃣ Command Nest -> AI Command Hub for Intelligence Operations**
-SentinelOps Nexus is an enterprise-grade intelligence operations management platform built to orchestrate complex, high-stakes workflows with precision and security. It unifies mission planning, AI-powered document intelligence, and knowledge management into a single operational command layer.
+*SentinelOps Nexus is an enterprise-grade intelligence operations management platform built to orchestrate complex, high-stakes workflows with precision and security. It unifies mission planning, AI-powered document intelligence, and knowledge management into a single operational command layer.*
 October 2025 -- November 2025
 [IMAGE:/commandnest.png,/commandnest2.jpg]
 - Leveraging RAG-based AI, vector search, and real-time WebSocket updates, the platform enables fast, context-aware decision-making.
 - Robust role-based access control with multi-factor authentication ensures security across teams, while Kanban-driven mission tracking, facility operations, analytics, and multi-channel notifications keep every operation synchronized.
 - Designed for scalability and reliability, SentinelOps Nexus transforms raw information into actionable intelligence at operational speed.
 -  AI-powered platform managing missions, documents, security, analytics, and operations. Centralized intelligence system with role-based access and real-time automation.
-
 \`\`\`python
 # Source Code
 GitHub - https://github.com/Abhay030405/Dev_or_Die
@@ -427,7 +425,7 @@ technologies = {
 \`\`\`
 ---
 **3️⃣ GeoSheild -> Proof that deep learning, when aimed right, can see disasters before humans do.**
-Built an AI system that hunts landslides from the sky using UAV and Remote Sensing imagery and deep learning.
+*Built an AI system that hunts landslides from the sky using UAV and Remote Sensing imagery and deep learning.*
 September 2025 -- October 2025
 [IMAGE:/geosheild.png,/geosheild2.jpg]
 - Engineered a Mask R-CNN–based instance segmentation pipeline to detect and isolate disaster-prone regions with pixel-level precision.
@@ -435,8 +433,9 @@ September 2025 -- October 2025
 - Leveraged transfer learning with COCO-pretrained ResNet-50 + FPN to achieve high accuracy on limited geospatial data.
 - Optimized training using frozen backbones, custom annotations, and controlled train/val/test splits. Transformed raw aerial images into actionable disaster intelligence within seconds.
 - Built a FastAPI backend to serve low-latency predictions for uploaded UAV images.
-
 \`\`\`python
+# Source Code
+GitHub - https://github.com/Abhay030405/Dev_or_Die
 # Tech Stack
 technologies = {
     "Programming Language": ["Python"],
@@ -448,98 +447,107 @@ technologies = {
 }
 \`\`\`
 ---
-**4️⃣ Landslide Detection System**
-An ML-based prediction model using satellite data:
-[IMAGE:/geosheild.png,/geosheild2.jpg]
-- Computer vision for terrain analysis
-- Trained Mask R-CNN achieving 86% F1-score on a limited annotated dataset.
-- Implemented transfer learning using COCO-pretrained ResNet-101 backbone architecture.
-- GIS integration for mapping (Remote sensing images from USGS Earth Explorer)
-
+**4️⃣ Market Mestro - Multi Agent System**
+*Market Maestro is a multi-agent AI-driven financial research platform engineered to analyze markets as a coordinated intelligence system rather than a single model. It orchestrates autonomous agents—Market Analyst, Event Monitor, Risk Evaluator, and Portfolio Optimizer—using LangChain and LangGraph to fetch live market data, track financial events, quantify risk, and generate data-backed investment strategies.*
+[IMAGE:/stockify.png,/stofiky2.png]
+- Multi-Agent AI System Engineered to Decode Markets, Risk, and Opportunity
+- Through a unified reasoning layer, the platform connects news sentiment, market movements, and portfolio metrics into actionable insights.
+- With real-time visualization, explainable AI summaries, and strategy generation, Market Maestro transforms raw financial signals into structured, decision-ready intelligence.
 \`\`\`python
+# Source Code
+GitHub - https://github.com/Abhay030405/market-maestro
 # Tech Stack
 technologies = {
-    "ML": ["TensorFlow", "PyTorch"],
-    "CV": ["OpenCV", "YOLO", "Mask-RCNN"],
-    "Model" : ["ResNet-101", "Segement Anything Model(SAM)"],
-    "Data": ["NumPy", "Pandas"],
-    "Deployment": ["Flask", "Docker"]
+    "Languages": ["Python"],
+    "Artificial Intelligence": ["Langchain", "LangGarph"] 
+    "Visualization Tools": ["Numpy", "Matplotlib"],
+    "Deployment": ["FastAPI"]
 }
 \`\`\`
 ---
-**5️⃣ Landslide Detection System**
-An ML-based prediction model using satellite data:
-[IMAGE:/geosheild.png,/geosheild2.jpg]
-- Computer vision for terrain analysis
-- Trained Mask R-CNN achieving 86% F1-score on a limited annotated dataset.
-- Implemented transfer learning using COCO-pretrained ResNet-101 backbone architecture.
-- GIS integration for mapping (Remote sensing images from USGS Earth Explorer)
-
+**5️⃣ Nueral Watch - Drift AI Assistant**
+*Neural Watch is an AI-powered data drift monitoring system designed to ensure the reliability and performance of machine learning models in production. It combines statistical methods and machine learning techniques to detect shifts in data distributions that can impact model accuracy.*
+[IMAGE:/drift.png,/drift2.png]
+Key Features:
+- Real-Time Data Monitoring: Continuously tracks incoming data streams for changes.
+- Statistical Drift Detection: Utilizes methods like KS Test and Chi-Squared Test to identify distribution shifts.
+- ML-Based Drift Detection: Implements models such as Autoencoders and Isolation Forests for anomaly detection.
+- LLM-Powered Explanations: Provides human-readable insights and recommendations using advanced language models.
+- Interactive Dashboard: Visualizes drift trends, metrics, and alerts for easy analysis.
+- Alerting System: Notifies stakeholders of significant drifts via email or messaging platforms.
 \`\`\`python
 # Tech Stack
+# Source Code
+GitHub - https://github.com/Abhay030405/data-drift-monitoring
 technologies = {
-    "ML": ["TensorFlow", "PyTorch"],
-    "CV": ["OpenCV", "YOLO", "Mask-RCNN"],
-    "Model" : ["ResNet-101", "Segement Anything Model(SAM)"],
-    "Data": ["NumPy", "Pandas"],
-    "Deployment": ["Flask", "Docker"]
+    "Languages": ["Python"],
+    "Artificial Intelligence": ["Langchain", "LangGarph"]
+    "Calculative Tools": ["KS Test", "PSI Test"] 
+    "Visualization Tools": ["Numpy", "Matplotlib"],
+    "Deployment": ["FastAPI"]
 }
 \`\`\`
 ---
-**6️⃣ Landslide Detection System**
-An ML-based prediction model using satellite data:
-[IMAGE:/geosheild.png,/geosheild2.jpg]
-- Computer vision for terrain analysis
-- Trained Mask R-CNN achieving 86% F1-score on a limited annotated dataset.
-- Implemented transfer learning using COCO-pretrained ResNet-101 backbone architecture.
-- GIS integration for mapping (Remote sensing images from USGS Earth Explorer)
-
+**6️⃣ Neuro Foundary - Collaborative Agentic Platform**
+*Build a Collaborative Agentic Platform proof-of-concept, an intelligent system that automates the end-to-end development of full-stack applications.*
+[IMAGE:/multi.png,/multi2.png]
+- The platform should connect with Azure DevOps (ADO), read project user stories, and orchestrate a team of specialized AI agents to generate, test, and integrate code.
+- The main goal is to drastically reduce development time, automate manual coding tasks, and standardize application architecture by translating plain-text project requirements directly into deployable, full-stack code.
 \`\`\`python
 # Tech Stack
 technologies = {
-    "ML": ["TensorFlow", "PyTorch"],
-    "CV": ["OpenCV", "YOLO", "Mask-RCNN"],
-    "Model" : ["ResNet-101", "Segement Anything Model(SAM)"],
-    "Data": ["NumPy", "Pandas"],
-    "Deployment": ["Flask", "Docker"]
+    "Languages": ["Python"],
+    "Artificial Intelligence": ["Langchain", "LangGarph"]
+    "Visualization Tools": ["Numpy", "Matplotlib"],
+    "Deployment": ["FastAPI"]
 }
 \`\`\`
 ---
-**7️⃣ Landslide Detection System**
-An ML-based prediction model using satellite data:
-[IMAGE:/geosheild.png,/geosheild2.jpg]
-- Computer vision for terrain analysis
-- Trained Mask R-CNN achieving 86% F1-score on a limited annotated dataset.
-- Implemented transfer learning using COCO-pretrained ResNet-101 backbone architecture.
-- GIS integration for mapping (Remote sensing images from USGS Earth Explorer)
-
+**7️⃣ FairLensAI - Bias Detection**
+*FairLens AI is an end-to-end system designed to explain machine learning model predictions and detect bias across user demographics.*
+[IMAGE:/bias.png,/bias2.png]
+It combines:
+- SHAP & LIME: Feature-level interpretability for predictions -Bias Detection Metrics: Identifies fairness issues across groups
+-LangChain: Generates human-readable explanations summarizing model reasoning
+-FastAPI Backend: Handles computation and API endpoints
+-Streamlit Dashboard: Interactive frontend for visualization and reporting
+-This system is ideal for ML model monitoring, AI observability, and ethical AI deployment.
+> It empowers data scientists and stakeholders to understand model behavior, ensure fairness, and build trust in AI systems.
 \`\`\`python
 # Tech Stack
+# Source Code
+GitHub - https://github.com/Abhay030405/ai-bias-explainability
 technologies = {
-    "ML": ["TensorFlow", "PyTorch"],
-    "CV": ["OpenCV", "YOLO", "Mask-RCNN"],
-    "Model" : ["ResNet-101", "Segement Anything Model(SAM)"],
-    "Data": ["NumPy", "Pandas"],
-    "Deployment": ["Flask", "Docker"]
+    "Languages": ["Python"],
+    "Artificial Intelligence": ["Langchain", "LangGarph"]
+    "Calculative Tools": ["Shap", "Lime"] 
+    "Visualization Tools": ["Numpy", "Matplotlib"],
+    "Deployment": ["FastAPI"]
 }
 \`\`\`
 ---
-**8️⃣ Landslide Detection System**
-An ML-based prediction model using satellite data:
-[IMAGE:/geosheild.png,/geosheild2.jpg]
-- Computer vision for terrain analysis
-- Trained Mask R-CNN achieving 86% F1-score on a limited annotated dataset.
-- Implemented transfer learning using COCO-pretrained ResNet-101 backbone architecture.
-- GIS integration for mapping (Remote sensing images from USGS Earth Explorer)
-
+**8️⃣ Conway Game of Life Simulator **
+*Conway's Game of Life is a cellular automaton devised by the British mathematician John Horton Conway. This project implements the simulation in Python using object-oriented programming principles and provides both visual and console-based representations of the evolving grid.*
+[IMAGE:/conway.png,/conway2.png]
+This simulation follows the rules of Conway's Game of Life:
+1. Any live cell with 2 or 3 live neighbors survives.
+2. Any dead cell with exactly 3 live neighbors becomes a live cell.
+3. All other live cells die, and all other dead cells stay dead.
+4. Implemented in Python using basic OOP concepts, list operations, and visualization using matplotlib.
+Features:
+1. Create and initialize a custom grid of any size.
+2. Populate the grid with live cells at specific coordinates.
+3. Step-by-step evolution of the grid.
+4. Run multiple steps at once.
+5. Console-based and graphical visualization of the grid.
 \`\`\`python
+# Source Code
+GitHub - https://github.com/Abhay030405/Conway-s-Game-of-Life
 # Tech Stack
 technologies = {
-    "ML": ["TensorFlow", "PyTorch"],
-    "CV": ["OpenCV", "YOLO", "Mask-RCNN"],
-    "Model" : ["ResNet-101", "Segement Anything Model(SAM)"],
-    "Data": ["NumPy", "Pandas"],
-    "Deployment": ["Flask", "Docker"]
+    "Languages": ["Python"],
+    "Visualization Tools": ["Numpy", "Matplotlib"],
+    "Deployment": ["FastAPI"]
 }
 \`\`\`
 *Visit my GitHub for source code and more projects!*
