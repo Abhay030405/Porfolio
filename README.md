@@ -9,7 +9,7 @@ I build end-to-end systems — from research ideas and raw data to deployed appl
 ## Live Portfolio
 
 Visit here:  
-https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+https://porfolio-phi-inky.vercel.app/
 
 ## About Me
 
