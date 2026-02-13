@@ -159,7 +159,7 @@ Competitive programming is where I built my core problem-solving muscle.:
 - Active on platforms like Codeforces and LeetCode
 - Solved **500+ algorithmic problems**
 - Strong command over data structures, algorithms, and complexity analysis
-- Ranked as Specialist on Codeforces with a peak rating of 1434
+- Ranked as Specialist on Codeforces with a peak rating of 1444
 - Regular participant in contests that demand speed, precision, and logic
 
 > Research trained me to **think deeply**, Development trained me to **build reliably**, Competitive programming trained me to **solve hard problems under pressure**
@@ -272,13 +272,13 @@ The following milestones reflect consistency, curiosity, and execution over time
 ***Solution we have proposed:***
 • We built a secure full-stack platform with role-based access, mission tracking boards, and AI-powered document analysis using RAG. The system supported real-time updates, knowledge search, and analytics dashboards, centralizing operations into a single intelligent management interface.
 ---
-## 4️⃣ Competitive Programming — Codeforces Rating 1390 (Pupil)
+## 4️⃣ Competitive Programming — Codeforces Rating 1444 (Specialist)
 *500+ problems solved across competitive programming platforms*
 [IMAGE:/codeforces.png,/leetcode.png]
 ***Problem: ***
 • Software engineering and ML roles require strong algorithmic thinking, optimization skills, and the ability to solve unfamiliar problems under strict time constraints.
 ***Solution: ***
-• Through consistent contest participation and practice, I solved hundreds of problems involving data structures, graphs, dynamic programming, and greedy strategies, reaching a peak Codeforces rating of 1390 (Pupil). This strengthened my speed, logical reasoning, and ability to design efficient solutions under pressure.
+• Through consistent contest participation and practice, I solved hundreds of problems involving data structures, graphs, dynamic programming, and greedy strategies, reaching a peak Codeforces rating of 1444 (Specialist). This strengthened my speed, logical reasoning, and ability to design efficient solutions under pressure.
 ---
 ## 5️⃣ Team RoboRajan 3.0 — Combat Robotics Bot
 *Winner — Robo-Wars (BotRush Robotics Club 2025), MNNIT*
