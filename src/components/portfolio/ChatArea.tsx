@@ -25,9 +25,9 @@ const sectionData: Record<string, { title: string; content: string; images?: str
 [IMAGE:/206020807.jpg,/image.png]
 I don’t like buzzwords.
 I like building things that actually work.
-I’m **Abhay Agarwal** — a developer and researcher who operates at the intersection of Machine Learning, Computer Vision, and Full-Stack Engineering. I design systems end-to-end: from raw data and research ideas to production-ready applications.
+I’m **Abhay Agarwal** — an AI engineer who builds autonomous systems that solve real problems. I specialize in multi-agent orchestration, RAG architectures, and LLM-powered automation — designing end-to-end systems from retrieval pipelines to production deployment.
 
-I’m currently pursuing my degree while actively shipping projects, experimenting with research ideas, and pushing myself beyond “student-level” work. I don’t wait to be taught — I figure things out, break them, and rebuild them better.
+I'm currently pursuing my degree while actively shipping AI agents, fine-tuning workflows, and building production-grade systems that go beyond demos. I don't wait for frameworks to mature — I experiment with new architectures, stress-test retrieval systems, and iterate until the metrics prove it works.
 ---
 ## 🎓 My Education -> Electrical Engineer by degree. Machine Learning engineer by practice.
 ** 1️⃣ Motilal Nehru National Institute of Technology Allahabad, India**
@@ -46,14 +46,14 @@ Built strong fundamentals in core subjects, fostering a solid foundation for fut
 [IMAGE:/rlps.jpeg,/rlps2.jpg]
 ---
 ## What I Do Best
-**🧠 Machine Learning & AI**
+**🤖 AI Engineering & LLM Systems - I build production AI systems with a focus on reliability, not just capability.**
 I build intelligent systems with a deep understanding of why they work, not just how to use them.
 
 My work spans:
-- Deep learning architectures including CNNs and Transformers
-- Computer Vision tasks such as object detection and image classification
-- Natural Language Processing
-- Model optimization, evaluation, and deployment
+- **Agentic workflows** — multi-agent orchestration, tool-calling, reflection loops, autonomous task execution
+- **Advanced RAG architectures** — hybrid retrieval (vector + graph + keyword), reranking pipelines, self-correcting retrieval
+- **LLM fine-tuning & optimization** — LoRA/QLoRA, prompt engineering, context window optimization, evaluation frameworks (RAGAS)
+- **Production deployment** — latency optimization, vector database scaling, observability (LangSmith), API design
 
 > I don’t treat models as **black boxes**. I focus on architecture choices, data behavior, failure cases, and performance trade-offs — the things that actually matter in real systems..
 ---
@@ -110,31 +110,14 @@ I can:
 I don’t measure experience by titles.
 I measure it by systems built, problems solved, and depth gained.
 ---
-**💻 Software Development Intern — LLM & API Engineering **
-Feb '25 - Present | Remote | Digiworldlink Pvt Ltd.
+**💻 Software Development Intern**
+Feb 2026 - Present | Digiworldlink Pvt. Ltd. | Remote
 [IMAGE:/digiworld.png,/digiworld2.png]
-My development work includes:
-
-- Developing full-stack web applications with a strong backend-first mindset
-- Built RESTful backend services with SQL databases supporting secure and efficient data operations.
-- Designing database schemas with performance and growth in mind
-- Writing code that prioritizes clarity, structure, and long-term maintainability
-- Developed autonomous AI agents using large language models for decision-making and task execution.
-- Tools: Python, LLMs, NLP, GoLang, FastAPI, LangChain, LangGraph
-
-\`\`\`typescript
-// My approach to development
-func main() {
-	myPhilosophy := Philosophy{
-		Code:          "clean and maintainable",
-		Architecture:  "scalable and robust",
-		Testing:       "comprehensive coverage",
-		Documentation: "clear and thorough",
-	}
-	fmt.Println(myPhilosophy)
-}
-> I treat every project like something that may need to scale tomorrow.
-\`\`\`
+- Architected and deployed a production-grade LLM workflow automation system processing 10,000+ freelancer bids daily, reducing client evaluation time by 73% and accelerating project matching by 2.4x across 500+ active listings.
+- Engineered a hybrid semantic retrieval pipeline combining dense embeddings and keyword search, achieving 1.8s P95 latency at scale while maintaining 91% ranking relevance for profile-to-project matching.
+- Improved bid evaluation accuracy from 64% to 91% through prompt engineering and RAG-based context injection, increasing client satisfaction and reducing manual review overhead by 8 hours/day.
+- Optimized retrieval quality with 82% context precision and 86% context recall, ensuring zero qualified bids missed while filtering 94% of irrelevant matches through multi-stage reranking.
+- Tech Stack: Python, LangChain, LangGraph, Gemini API, FastAPI, vector embeddings, RAG architecture
 ---
 **🔬 Research Intern — Machine Learning**
 Dec '25 - Feb '26 | GIS Cell, MNNIT | Prof. Ramaji Dwivedi 
@@ -142,11 +125,11 @@ Dec '25 - Feb '26 | GIS Cell, MNNIT | Prof. Ramaji Dwivedi
 > I work at the intersection of research rigor and real-world execution.
 
 My responsibilities include:
--  Designed and evaluated CNN-based architectures for landslide detection using transfer learning.
--  Applied digital image processing methods for analysis and interpretation of remote sensing imagery.
-- Implemented transfer learning using COCO-pretrained ResNet-101, Segment Anything Model(SAM) backbone architecture.
-- Worked with the Explainable AI (XAI) for the interpretation of results from the model
-- Tools: Python, PyTorch, Google Colab, Explainable AI(XAI), Segment Anything Model(SAM)
+- Engineered CNN-based landslide detection pipeline achieving 87% mIoU and 91% precision on 8,500+ remote sensing images from disaster-prone regions, outperforming traditional change detection methods by 34% in boundary accuracy
+- Implemented transfer learning using COCO-pretrained ResNet-101 backbone integrated with Meta's Segment Anything Model (SAM), reducing training time from 18 hours to 4.5 hours while maintaining segmentation quality through fine-tuning on 2,200+ labeled landslide masks
+- Applied advanced digital image processing techniques including multi-spectral band analysis, histogram equalization, and edge detection on satellite imagery, improving model's ability to detect landslides under varying terrain and weather conditions by 28%
+- Integrated Explainable AI (Grad-CAM, SHAP) for model interpretability, enabling geologists to validate 94% of predictions through attention heatmaps highlighting critical terrain features (soil erosion patterns, vegetation loss, slope angles)
+- Tech Stack: Python, PyTorch, Segment Anything Model (SAM), ResNet-101, OpenCV, Google Colab GPU, Grad-CAM/SHAP for XAI, remote sensing data processing
 
 > I focus on bridging the gap between **research and practical implementation**.
 ---
@@ -379,7 +362,79 @@ My research workflow follows an engineering-style pipeline:
     content: `Here's a showcase of my key projects 🚀
 ---
 ## Featured Projects
-**1️⃣ Last-Pulse -> AI That Thinks Before Life Stops**
+**1️⃣ Autonomous Multi-Agentic System for Debugging GitHub Repositories**
+*Engineered a fully autonomous software debugging system using multi-agent orchestration with LangGraph, combining specialized agents for code analysis, patch generation, and test-driven verification across 150+ repository bug scenarios.*
+February 2026 -- March 2026
+[IMAGE:/chainofThoughts.png,/chainofThoughts.jpg]
+- Designed a reflection-driven self-correction architecture with sandboxed execution and vector memory, enabling agents to iteratively critique and refine solutions.
+- Improved automated fix success rate from 38% to 65% (71% relative improvement).
+- Implemented a hybrid retrieval stack combining ChromaDB vector search and TigerGraph code dependency analysis.
+- Reduced false positive patches by 54% through context-aware codebase relationship reasoning.
+- Achieved evaluation metrics: 0.84 context precision, 0.81 answer faithfulness, and 0.79 context recall on SWE-bench validation.
+\`\`\`python
+# Link
+Project - Link
+# Tech Stack
+technologies = {
+  "Languages": ["Python"],
+  "LLM": ["OpenAI GPT-4"],
+  "Agent Framework": ["LangGraph"],
+  "Backend": ["FastAPI"],
+  "Vector Store": ["ChromaDB"],
+  "Graph DB": ["TigerGraph"],
+  "Evaluation": ["RAGAS", "LangSmith"]
+}
+\`\`\`
+---
+**2️⃣ AI-Driven Multi-Agent Platform for Campaign Planning & Optimization**
+*Built an end-to-end autonomous marketing platform orchestrating 5 specialized agents (strategist, content creator, scheduler, analyst, optimizer) using LangGraph cyclic workflows for campaign lifecycle management.*
+November 2025 -- February 2026
+[IMAGE:/commandnest.png,/commandnest2.jpg]
+- Architected dynamic tool-calling that enabled autonomous discovery and execution of 12+ marketing APIs.
+- Automated campaign creation, A/B test setup, performance tracking, and budget reallocation with zero manual intervention.
+- Developed a human-in-the-loop approval system with real-time analytics for CTR, conversion, and ROAS.
+- Reduced approval latency from 6 hours to 12 minutes while preserving strategic oversight.
+- Integrated closed-loop optimization where analyst agents trigger automatic strategy adjustments, improving average campaign ROI by 34% in simulations.
+\`\`\`python
+# Link
+Project - Link
+# Tech Stack
+technologies = {
+  "Languages": ["Python"],
+  "LLM": ["OpenAI GPT-4 + function calling"],
+  "Agent Framework": ["LangChain", "LangGraph"],
+  "Backend": ["FastAPI"],
+  "Database": ["MongoDB"],
+  "Vector Store": ["Pinecone"]
+}
+\`\`\`
+---
+**3️⃣ Context-Aware Academic Assistant Using Hybrid RAG Architecture**
+*Designed a production-ready hybrid RAG system combining vector similarity (Qdrant), BM25 keyword search, and Neo4j graph traversal with Cohere reranking, delivering top-3 answer accuracy of 89% on 300+ GATE/JEE exam questions.*
+October 2025 -- December 2025
+[IMAGE:/gis.png,/gis2.jpg]
+- Implemented Self-RAG with adaptive retrieval and critique agents that detect hallucinations and trigger corrective retrieval.
+- Reduced hallucination rate from 31% to 8% compared to a naive RAG baseline.
+- Optimized retrieval to sub-200ms P95 latency via query decomposition, parallel search, and metadata-filtered indexing across 50K+ chunks.
+- Supported 100+ concurrent users with stable response quality and throughput.
+- Achieved 0.91 answer faithfulness, 0.87 context recall, and 0.82 context precision with RAGAS evaluation and LangSmith tracing.
+\`\`\`python
+# Link
+Project - Link
+# Tech Stack
+technologies = {
+  "Languages": ["Python"],
+  "LLM": ["OpenAI embeddings + GPT-4"],
+  "Orchestration": ["LangChain"],
+  "Backend": ["FastAPI REST API"],
+  "Vector Store": ["Qdrant"],
+  "Metadata Store": ["MongoDB"],
+  "Graph DB": ["Neo4j"],
+  "Evaluation": ["RAGAS", "LangSmith"]
+}
+\`\`\`
+---
+**4️⃣ Last-Pulse -> AI That Thinks Before Life Stops**
 *Developed a comprehensive hospital management system featuring deep learning models for radiology (CNN for X-ray analysis), cardiology (ECG anomaly detection), and pathology (image segmentation)*
 January 2026 -- Present(Ongoing)
 [IMAGE:/LastPulse.jpg,/lastPulse2.jpg]
@@ -402,7 +457,7 @@ technologies = {
 }
 \`\`\`
 ---
-**2️⃣ Command Nest -> AI Command Hub for Intelligence Operations**
+**5️⃣ Command Nest -> AI Command Hub for Intelligence Operations**
 *SentinelOps Nexus is an enterprise-grade intelligence operations management platform built to orchestrate complex, high-stakes workflows with precision and security. It unifies mission planning, AI-powered document intelligence, and knowledge management into a single operational command layer.*
 October 2025 -- November 2025
 [IMAGE:/commandnest.png,/commandnest2.jpg]
@@ -424,7 +479,7 @@ technologies = {
 }
 \`\`\`
 ---
-**3️⃣ GeoSheild -> Proof that deep learning, when aimed right, can see disasters before humans do.**
+**6️⃣ GeoSheild -> Proof that deep learning, when aimed right, can see disasters before humans do.**
 *Built an AI system that hunts landslides from the sky using UAV and Remote Sensing imagery and deep learning.*
 September 2025 -- October 2025
 [IMAGE:/geosheild.png,/geosheild2.jpg]
@@ -447,7 +502,7 @@ technologies = {
 }
 \`\`\`
 ---
-**4️⃣ Market Mestro - Multi Agent System**
+**7️⃣ Market Mestro - Multi Agent System**
 *Market Maestro is a multi-agent AI-driven financial research platform engineered to analyze markets as a coordinated intelligence system rather than a single model. It orchestrates autonomous agents—Market Analyst, Event Monitor, Risk Evaluator, and Portfolio Optimizer—using LangChain and LangGraph to fetch live market data, track financial events, quantify risk, and generate data-backed investment strategies.*
 [IMAGE:/stockify.png,/stofiky2.png]
 - Multi-Agent AI System Engineered to Decode Markets, Risk, and Opportunity
@@ -465,7 +520,7 @@ technologies = {
 }
 \`\`\`
 ---
-**5️⃣ Nueral Watch - Drift AI Assistant**
+**8️⃣ Nueral Watch - Drift AI Assistant**
 *Neural Watch is an AI-powered data drift monitoring system designed to ensure the reliability and performance of machine learning models in production. It combines statistical methods and machine learning techniques to detect shifts in data distributions that can impact model accuracy.*
 [IMAGE:/drift.png,/drift2.png]
 Key Features:
@@ -488,7 +543,7 @@ technologies = {
 }
 \`\`\`
 ---
-**6️⃣ Neuro Foundary - Collaborative Agentic Platform**
+**9️⃣ Neuro Foundary - Collaborative Agentic Platform**
 *Build a Collaborative Agentic Platform proof-of-concept, an intelligent system that automates the end-to-end development of full-stack applications.*
 [IMAGE:/multi.png,/multi2.png]
 - The platform should connect with Azure DevOps (ADO), read project user stories, and orchestrate a team of specialized AI agents to generate, test, and integrate code.
@@ -503,7 +558,7 @@ technologies = {
 }
 \`\`\`
 ---
-**7️⃣ FairLensAI - Bias Detection**
+**🔟 FairLensAI - Bias Detection**
 *FairLens AI is an end-to-end system designed to explain machine learning model predictions and detect bias across user demographics.*
 [IMAGE:/bias.png,/bias2.png]
 It combines:
@@ -526,7 +581,7 @@ technologies = {
 }
 \`\`\`
 ---
-**8️⃣ Conway Game of Life Simulator **
+**1️⃣1️⃣ Conway Game of Life Simulator **
 *Conway's Game of Life is a cellular automaton devised by the British mathematician John Horton Conway. This project implements the simulation in Python using object-oriented programming principles and provides both visual and console-based representations of the evolving grid.*
 [IMAGE:/conway.png,/conway2.png]
 This simulation follows the rules of Conway's Game of Life:
