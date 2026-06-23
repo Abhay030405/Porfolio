@@ -1,4 +1,15 @@
 import { useState, useEffect } from "react";
+import { User, Code, Briefcase, FolderKanban, Trophy, FileText, Mail } from "lucide-react";
+
+const NAV_CHIPS = [
+  { label: "About Me",     icon: User,         section: "about"        },
+  { label: "Skills",       icon: Code,         section: "skills"       },
+  { label: "Experience",   icon: Briefcase,    section: "experience"   },
+  { label: "Projects",     icon: FolderKanban, section: "projects"     },
+  { label: "Achievements", icon: Trophy,       section: "achievements" },
+  { label: "Research",     icon: FileText,     section: "research"     },
+  { label: "Contact",      icon: Mail,         section: "contact"      },
+];
 
 interface Message {
   id: string;
@@ -11,34 +22,48 @@ interface Message {
 interface ChatMessageProps {
   message: Message;
   isLatest?: boolean;
+  onSectionChange?: (section: string) => void;
 }
 
-const ChatMessage = ({ message, isLatest = false }: ChatMessageProps) => {
-  const [displayedContent, setDisplayedContent] = useState("");
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
+const CHARS_PER_SECOND = 200;
 
-  // Typing animation effect
+const ChatMessage = ({ message, isLatest = false, onSectionChange }: ChatMessageProps) => {
+  const [displayedContent, setDisplayedContent] = useState(
+    message.type === "assistant" && isLatest ? "" : message.content
+  );
+  const [streamDone, setStreamDone] = useState(
+    !(message.type === "assistant" && isLatest)
+  );
+
   useEffect(() => {
-    if (message.type === "assistant" && isLatest && !isTypingComplete) {
-      let currentIndex = 0;
-      setDisplayedContent("");
-      
-      const typingInterval = setInterval(() => {
-        if (currentIndex < message.content.length) {
-          setDisplayedContent(message.content.slice(0, currentIndex + 1));
-          currentIndex++;
-        } else {
-          setIsTypingComplete(true);
-          clearInterval(typingInterval);
-        }
-      }, 0.5); // Adjust speed here (lower = faster)
-
-      return () => clearInterval(typingInterval);
-    } else {
+    if (message.type !== "assistant" || !isLatest) {
       setDisplayedContent(message.content);
-      setIsTypingComplete(true);
+      setStreamDone(true);
+      return;
     }
-  }, [message.content, message.type, isLatest]);
+
+    setStreamDone(false);
+    let rafId: number;
+    let startTime: number | null = null;
+    setDisplayedContent("");
+
+    const step = (timestamp: number) => {
+      startTime ??= timestamp;
+      const charsToShow = Math.min(
+        Math.floor(((timestamp - startTime) / 1000) * CHARS_PER_SECOND),
+        message.content.length
+      );
+      setDisplayedContent(message.content.slice(0, charsToShow));
+      if (charsToShow < message.content.length) {
+        rafId = requestAnimationFrame(step);
+      } else {
+        setStreamDone(true);
+      }
+    };
+
+    rafId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(rafId);
+  }, [message.id]);
 
   const formatContent = (content: string) => {
     // Process the content line by line for better control
@@ -54,12 +79,12 @@ const ChatMessage = ({ message, isLatest = false }: ChatMessageProps) => {
                         imageUrls.length === 2 ? 'grid-cols-2' :
                         'grid-cols-2';
       
-      const imageElements = imageUrls.map((url, index) => `
+      const imageElements = imageUrls.map((url) => `
         <div class="relative group overflow-hidden rounded-xl border border-border bg-muted hover:border-primary/50 transition-all duration-200 cursor-pointer">
           <img
             src="${url.trim()}"
-            alt="Project screenshot ${index + 1}"
-            class="w-full h-48 object-cover transition-transform duration-300 group-hover:scale-105"
+            alt="Project screenshot"
+            class="w-full h-32 md:h-48 object-cover transition-transform duration-300 group-hover:scale-105"
             loading="lazy"
           />
           <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200"></div>
@@ -69,7 +94,7 @@ const ChatMessage = ({ message, isLatest = false }: ChatMessageProps) => {
       return `<div class="my-4 grid gap-2 ${gridClass}">${imageElements}</div>`;
     };
 
-    lines.forEach((line, index) => {
+    lines.forEach((line) => {
       // Code block start
       if (line.startsWith('```') && !inCodeBlock) {
         inCodeBlock = true;
@@ -82,8 +107,8 @@ const ChatMessage = ({ message, isLatest = false }: ChatMessageProps) => {
       if (line.startsWith('```') && inCodeBlock) {
         inCodeBlock = false;
         result.push(`
-          <div class="my-4 rounded-lg overflow-hidden bg-[#1e1e1e] border border-border">
-            <div class="flex items-center justify-between px-4 py-2 bg-[#2d2d2d] border-b border-border">
+          <div class="my-4 rounded-lg overflow-hidden bg-[#1e1e1e] border border-border max-w-full">
+            <div class="flex items-center justify-between px-3 py-2 bg-[#2d2d2d] border-b border-border">
               <span class="text-xs text-muted-foreground">${codeLanguage}</span>
               <button class="text-xs text-muted-foreground hover:text-foreground flex items-center gap-1">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +117,7 @@ const ChatMessage = ({ message, isLatest = false }: ChatMessageProps) => {
                 Copy code
               </button>
             </div>
-            <pre class="p-4 overflow-x-auto"><code class="text-sm font-mono text-[#d4d4d4]">${codeContent.trim()}</code></pre>
+            <pre class="p-3 overflow-x-auto text-xs md:text-sm"><code class="font-mono text-[#d4d4d4] whitespace-pre">${codeContent.trim()}</code></pre>
           </div>
         `);
         return;
@@ -147,9 +172,15 @@ const ChatMessage = ({ message, isLatest = false }: ChatMessageProps) => {
         return;
       }
 
-      // H2 Headers (## Header or **Header:**)
+      // H2 Headers (## Header)
       if (line.startsWith('## ')) {
         result.push(`<h2 class="text-xl font-semibold text-foreground mt-8 mb-4">${line.slice(3)}</h2>`);
+        return;
+      }
+
+      // H3 Headers (### Header) — used for project titles
+      if (line.startsWith('### ')) {
+        result.push(`<h3 class="text-2xl font-bold text-foreground mt-8 mb-3">${line.slice(4)}</h3>`);
         return;
       }
 
@@ -218,7 +249,7 @@ const ChatMessage = ({ message, isLatest = false }: ChatMessageProps) => {
   if (message.type === "user") {
     return (
       <div className="flex justify-end animate-fade-in">
-        <div className="user-message max-w-md">
+        <div className="user-message max-w-[80%] md:max-w-md">
           <p className="text-foreground text-sm">{message.content}</p>
         </div>
       </div>
@@ -226,15 +257,27 @@ const ChatMessage = ({ message, isLatest = false }: ChatMessageProps) => {
   }
 
   return (
-    <div className="flex items-start gap-4 animate-fade-in">
-      <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-medium flex-shrink-0">
-        A
-      </div>
-      <div className="message-bubble assistant-message flex-1 pt-1">
+    <div className="flex items-start animate-fade-in">
+      <div className="message-bubble assistant-message flex-1 min-w-0">
         <div
-          className="text-[15px] leading-relaxed"
+          className="text-[14px] md:text-[15px] leading-relaxed w-full overflow-hidden"
           dangerouslySetInnerHTML={{ __html: formatContent(displayedContent) }}
         />
+        {/* Navigation chips — mobile only, appear after streaming finishes */}
+        {isLatest && streamDone && onSectionChange && (
+          <div className="md:hidden mt-6 grid grid-cols-2 gap-2 w-full max-w-xs mx-auto">
+            {NAV_CHIPS.map((item) => (
+              <button
+                key={item.section}
+                onClick={() => onSectionChange(item.section)}
+                className="group flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/25 active:scale-95 transition-all duration-200 text-sm text-left col-span-1 last:col-span-2 last:justify-center"
+              >
+                <item.icon className="w-4 h-4 text-white/30 group-hover:text-white/70 transition-colors flex-shrink-0" />
+                <span className="font-medium text-white/50 group-hover:text-white/90 transition-colors">{item.label}</span>
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

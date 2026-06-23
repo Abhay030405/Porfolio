@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Plus, ArrowUp, Mic } from "lucide-react";
+import { ArrowUp, User, Code, Briefcase, Trophy, FileText, FolderKanban, Mail } from "lucide-react";
 import ChatMessage from "./ChatMessage";
 
 interface Message {
@@ -19,79 +19,76 @@ interface ChatAreaProps {
 const sectionData: Record<string, { title: string; content: string; images?: string[] }> = {
   about: {
     title: "About Me",
-    content: `I'll tell you about myself clearly and in detail — no hype, no confusion 🙂
+    content: `I’ll tell you exactly who I am. No fluff — just the real picture.
 ---
-## 👨‍🎓 About Me -> Hello World, MySelf Abhay Agarwal
+## 👨‍💻 Hello World — I’m Abhay Agarwal
 [IMAGE:/206020807.jpg,/image.png]
-I don’t like buzzwords.
-I like building things that actually work.
-I’m **Abhay Agarwal** — an AI engineer who builds autonomous systems that solve real problems. I specialize in multi-agent orchestration, RAG architectures, and LLM-powered automation — designing end-to-end systems from retrieval pipelines to production deployment.
+I’m a **second-year Electrical Engineering undergrad at MNNIT Allahabad** who builds production AI systems — not after graduation, right now.
 
-I'm currently pursuing my degree while actively shipping AI agents, fine-tuning workflows, and building production-grade systems that go beyond demos. I don't wait for frameworks to mature — I experiment with new architectures, stress-test retrieval systems, and iterate until the metrics prove it works.
+While most people my age are still figuring out what to build, I’ve already shipped:
+- A **10-tool HR AI Copilot** processing real hiring pipelines at EmployLab.ai
+- A **voice AI companion (Zia)** with episodic memory, relationship stage tracking, and language calibration — serving 500+ candidates
+- A **multi-agent autonomous debugging system** that pushed automated fix rates from 38% to 65%
+- A **hybrid RAG academic assistant** hitting 89% top-3 accuracy across 300+ exam questions
+- A **landslide detection pipeline** achieving 87% mIoU on 8,500+ satellite images
+
+I don’t demo things. I ship them, measure them, and push the metrics until they prove the system actually works.
+
+> Codeforces Specialist (peak rating 1444). 500+ problems solved. 2 internships before year 2. That’s the baseline I hold myself to.
 ---
-## 🎓 My Education -> Electrical Engineer by degree. Machine Learning engineer by practice.
-** 1️⃣ Motilal Nehru National Institute of Technology Allahabad, India**
-*Bachelor of Technology, Electrical Engineering | 2024– 2028 | CPI: 7.65*
-While my formal degree is in core engineering, my primary focus lies in Artificial Intelligence, Machine Learning, and Systems Engineering. I use my academics as a foundation — mathematics, signals, logic, and problem solving — and extend it into software, research, and real-world system building.
+## 🎓 Education — Electrical Engineer by degree. AI Engineer by execution.
+** 1️⃣ Motilal Nehru National Institute of Technology Allahabad**
+*B.Tech, Electrical Engineering | 2024 – 2028 | CPI: 7.65*
 [IMAGE:/gis.png,/mnnit.jpg]
+My degree is in core engineering — signals, circuits, mathematics, systems theory. I use every bit of it. The mathematical rigor from EE shapes how I think about AI: why a retrieval pipeline degrades under distribution shift, why a multi-agent system deadlocks under contention, why attention mechanisms break down at long context. I don’t treat ML as a plug-and-play toolkit. I understand the architecture underneath it.
 
 ** 2️⃣ Mahatma Hansraj Modern School, Jhansi — Uttar Pradesh**
-*Higher Secondary Education (CBSE) | 2021 – 2023 | Percentage: 82.33%*
-Built core fundamentals in physics, mathematics, and logical reasoning that later shaped my interest in programming and problem solving
+*Higher Secondary (CBSE) | 2021 – 2023 | 82.33%*
 [IMAGE:/mhms2.jpg,/mhms.jpg]
+Where I built the fundamentals — physics, mathematics, logical reasoning — and realized the most interesting problems always sit at the boundary between disciplines.
 
 ** 3️⃣ Rani Laxmibai Public School, Jhansi — Uttar Pradesh**
-*Secondary Education (CBSE) | 2021 | Percentage: 93.2%*
-Built strong fundamentals in core subjects, fostering a solid foundation for future academic and professional pursuits. Developed early discipline, curiosity toward technology, and strong academic foundations.
+*Secondary (CBSE) | 2021 | 93.2%*
 [IMAGE:/rlps.jpeg,/rlps2.jpg]
+Early foundation. Strong academics. The beginning of a genuine curiosity about how systems actually work under the hood.
 ---
-## What I Do Best
-**🤖 AI Engineering & LLM Systems - I build production AI systems with a focus on reliability, not just capability.**
-I build intelligent systems with a deep understanding of why they work, not just how to use them.
+## ⚡ What I Actually Build
+**🤖 Production LLM & Agentic Systems**
+Not API wrappers. Full-stack AI pipelines — retrieval, reasoning, memory, evaluation, deployment — designed to hold up under real load and edge cases.
+- **Multi-agent orchestration** — LangGraph workflows, tool-calling agents, reflection loops, sandboxed execution, self-correction architectures
+- **Advanced RAG** — hybrid retrieval (vector + BM25 + graph), reranking pipelines, Self-RAG with adaptive retrieval, RAGAS evaluation
+- **LLM system design** — context window management, KV-cache optimization, prompt engineering at production scale, latency budgeting
+- **Memory & personalization** — pgvector episodic stores, semantic retrieval with door-rule enforcement, behavioral signal extraction
 
-My work spans:
-- **Agentic workflows** — multi-agent orchestration, tool-calling, reflection loops, autonomous task execution
-- **Advanced RAG architectures** — hybrid retrieval (vector + graph + keyword), reranking pipelines, self-correcting retrieval
-- **LLM fine-tuning & optimization** — LoRA/QLoRA, prompt engineering, context window optimization, evaluation frameworks (RAGAS)
-- **Production deployment** — latency optimization, vector database scaling, observability (LangSmith), API design
-
-> I don’t treat models as **black boxes**. I focus on architecture choices, data behavior, failure cases, and performance trade-offs — the things that actually matter in real systems..
+> I don’t build things that look impressive in demos. I build things that hold up under production constraints, real users, and failure modes nobody anticipated.
 ---
-**🌐 Full-Stack Development**
-I engineer scalable applications with a strong focus on system design and long-term maintainability.
-
-I’m experienced in:
-- Building full-scale web applications using React and FastAPI
-- Creating responsive and user-friendly interfaces
-- Implementing robust backend services with GoLang and FastAPI
-- Designing **RESTful APIs** and microservices
-- Database schema design and performance optimization
-- Cloud deployment and DevOps
-
-I don’t just **make it work**.
-I design systems that are structured, efficient, and built to scale.
-For example:
-
-> Instead of just writing code, I focus on **architecture, performance, and maintainability**.
+**🌍 Computer Vision & Remote Sensing**
+Deep learning applied to real-world perception — satellite imagery, disaster monitoring, geospatial analysis. Not toy datasets.
+- Semantic segmentation (U-Net, Mask R-CNN) on multi-spectral satellite data
+- Transfer learning with COCO-pretrained ResNet-101 + SAM for geospatial fine-tuning
+- Explainable AI (Grad-CAM, SHAP) so domain experts can actually validate model decisions
+- Multi-spectral band analysis, histogram equalization, edge detection on remote sensing imagery
 ---
-**⚙️ Problem Solving & Engineering Mindset**
-This is where I stand out.
-
-I can:
-- Break down complex problems into clear, solvable components
-- Debug deeply and explain exactly **why** something failed
-- Translate abstract ideas into clean, working code
-- Optimize existing systems for speed, efficiency, and clarity
-
-> I approach problems like an **engineer — logically, systematically, and with attention to edge cases**.
+**🌐 Full-Stack Engineering**
+I build the interfaces and backends my AI systems need — not because I have to, but because I refuse to hand off architecture decisions to someone else.
+- **Frontend:** React, TypeScript, Tailwind CSS — clean, fast, functional
+- **Backend:** FastAPI, Node.js, GoLang — structured APIs, not spaghetti
+- **Databases:** PostgreSQL, MongoDB, Redis, ChromaDB, Qdrant, pgvector — right tool for the problem
 ---
-## What Drives Me
-- 🚀 Building systems that solve real, non-trivial problems
-- 📚 Constantly leveling up my technical depth
-- 🤝 Working with people who think rigorously and build seriously
-- 🔬 Exploring cutting-edge ideas and pushing them into execution
+## 🔥 What Makes Me Different
+Most people at my stage are building tutorials and cloning projects.
+I’m building systems that solve non-trivial problems — deployed, measured, and continuously improved.
 
-> I believe great software is a balance of strong fundamentals, clean design, and ruthless clarity. That’s the standard I hold my work to.
+The combination that’s genuinely rare:
+- **Deep enough in AI/ML** to design architectures from scratch, not just call APIs
+- **Strong enough in engineering** to ship full production backends and frontends
+- **Sharp enough in algorithms** to solve hard problems under time pressure (Codeforces Specialist)
+- **Research-trained** to think rigorously about *why* something fails, not just *when* it fails
+
+I’m 20 years old. I’m a second-year undergrad.
+And I’m already building at production scale — for real clients, on real systems, with real metrics.
+
+> That’s not a flex. That’s just the standard I decided to hold myself to.
 ---
 ## What to learn more about me ?
 **Type any of these commands:**
@@ -107,31 +104,30 @@ I can:
     content: `Here's a detailed look at my professional journey 📋
 ---
 ## My Experience
-I don’t measure experience by titles.
-I measure it by systems built, problems solved, and depth gained.
+I don’t chase job titles or pad my resume with buzzwords.
+Every role I’ve taken has one thing in common — I shipped something real.
+Production systems. Research pipelines. AI agents running at scale.
+Not demos. Not POCs. Things that actually worked under pressure.
+> If it didn’t solve a hard problem or make something meaningfully better — it didn’t make the cut.
+---
+**🤖 Software Development Intern**
+April 2026 - June 2026 | EmployLab.ai | Remote
+[IMAGE:/employlabs.png,/employlabs1.png]
+- Engineered a production HR AI Copilot orchestrating 10 natural-language-driven tools (candidate moves, rejections, comparisons, interview scheduling, transcript analysis, pipeline overview) with a single Claude API call per conversation — all subsequent turns fully deterministic — eliminating per-turn LLM cost while reducing recruiter pipeline operations from multi-step dashboard clicks to free-form English commands.
+- Architected stateless multi-turn HR conversation flows using conversation history as the sole state store (zero sessions, zero Redis, zero DB polling), designing 3-turn reason-capture flows backed by a live tag-bank that auto-generated audit-ready structured notes on every candidate action — reducing HR documentation overhead to zero additional manual effort per action.
+- Built Zia's complete Ring 2 Candidate Context Layer — an 8-component personalization pipeline spanning episodic memory store, semantic retriever, relationship stage tracker, language calibrator, objectives tracker, compaction engine, mixing board, and context assembler — delivering a dynamically assembled ~2,500 token candidate context per LLM call in under 300ms, enabling Zia to treat 500+ candidates uniquely across sessions.
+- Implemented a PostgreSQL + pgvector episodic memory system with a 5-stage multi-filter retrieval pipeline (cosine similarity → recency boost → importance filter → door rule enforcement → diversity filter) achieving semantic memory retrieval in under 150ms — the conservative door rule enforcer eliminated intrusive memory surfaces entirely, achieving zero violations across 20+ eval scenarios and ≥ 4.0/5.0 personalization quality scores.
+- Engineered a 4-level Hinglish/formality language calibration system and conversation compaction engine that kept 30+ turn voice conversations within 11,000 total tokens at 90% KV-cache hit rate — sustaining end-to-end voice response latency under 2 seconds and powering a 5-stage relationship arc (Stranger → Life Companion) with ≥ 80% blind rater accuracy for stage-distinct behavior.
+- Tech Stack: Python, FastAPI, Claude API (Anthropic), PostgreSQL, pgvector, Redis, SQLAlchemy, Pydantic
 ---
 **💻 Software Development Intern**
-Feb 2026 - Present | Digiworldlink Pvt. Ltd. | Remote
+February 2026 - March 2026 | Digiworldlink Pvt. Ltd. | Remote
 [IMAGE:/digiworld.png,/digiworld2.png]
 - Architected and deployed a production-grade LLM workflow automation system processing 10,000+ freelancer bids daily, reducing client evaluation time by 73% and accelerating project matching by 2.4x across 500+ active listings.
 - Engineered a hybrid semantic retrieval pipeline combining dense embeddings and keyword search, achieving 1.8s P95 latency at scale while maintaining 91% ranking relevance for profile-to-project matching.
 - Improved bid evaluation accuracy from 64% to 91% through prompt engineering and RAG-based context injection, increasing client satisfaction and reducing manual review overhead by 8 hours/day.
 - Optimized retrieval quality with 82% context precision and 86% context recall, ensuring zero qualified bids missed while filtering 94% of irrelevant matches through multi-stage reranking.
 - Tech Stack: Python, LangChain, LangGraph, Gemini API, FastAPI, vector embeddings, RAG architecture
----
-**🔬 Research Intern — Machine Learning**
-Dec '25 - Feb '26 | GIS Cell, MNNIT | Prof. Ramaji Dwivedi 
-[IMAGE:/gis.png,/gis2.jpg]
-> I work at the intersection of research rigor and real-world execution.
-
-My responsibilities include:
-- Engineered CNN-based landslide detection pipeline achieving 87% mIoU and 91% precision on 8,500+ remote sensing images from disaster-prone regions, outperforming traditional change detection methods by 34% in boundary accuracy
-- Implemented transfer learning using COCO-pretrained ResNet-101 backbone integrated with Meta's Segment Anything Model (SAM), reducing training time from 18 hours to 4.5 hours while maintaining segmentation quality through fine-tuning on 2,200+ labeled landslide masks
-- Applied advanced digital image processing techniques including multi-spectral band analysis, histogram equalization, and edge detection on satellite imagery, improving model's ability to detect landslides under varying terrain and weather conditions by 28%
-- Integrated Explainable AI (Grad-CAM, SHAP) for model interpretability, enabling geologists to validate 94% of predictions through attention heatmaps highlighting critical terrain features (soil erosion patterns, vegetation loss, slope angles)
-- Tech Stack: Python, PyTorch, Segment Anything Model (SAM), ResNet-101, OpenCV, Google Colab GPU, Grad-CAM/SHAP for XAI, remote sensing data processing
-
-> I focus on bridging the gap between **research and practical implementation**.
 ---
 **⚙️ Competitive Programming — Algorithms & DSA**
 *2+ years of consistent practice*
@@ -362,33 +358,9 @@ My research workflow follows an engineering-style pipeline:
     content: `Here's a showcase of my key projects 🚀
 ---
 ## Featured Projects
-**1️⃣ Autonomous Multi-Agentic System for Debugging GitHub Repositories**
-*Engineered a fully autonomous software debugging system using multi-agent orchestration with LangGraph, combining specialized agents for code analysis, patch generation, and test-driven verification across 150+ repository bug scenarios.*
-February 2026 -- March 2026
-[IMAGE:/chainofThoughts.png,/chainofThoughts.jpg]
-- Designed a reflection-driven self-correction architecture with sandboxed execution and vector memory, enabling agents to iteratively critique and refine solutions.
-- Improved automated fix success rate from 38% to 65% (71% relative improvement).
-- Implemented a hybrid retrieval stack combining ChromaDB vector search and TigerGraph code dependency analysis.
-- Reduced false positive patches by 54% through context-aware codebase relationship reasoning.
-- Achieved evaluation metrics: 0.84 context precision, 0.81 answer faithfulness, and 0.79 context recall on SWE-bench validation.
-\`\`\`python
-# Link
-Project - Link
-# Tech Stack
-technologies = {
-  "Languages": ["Python"],
-  "LLM": ["OpenAI GPT-4"],
-  "Agent Framework": ["LangGraph"],
-  "Backend": ["FastAPI"],
-  "Vector Store": ["ChromaDB"],
-  "Graph DB": ["TigerGraph"],
-  "Evaluation": ["RAGAS", "LangSmith"]
-}
-\`\`\`
----
-**2️⃣ AI-Driven Multi-Agent Platform for Campaign Planning & Optimization**
-*Built an end-to-end autonomous marketing platform orchestrating 5 specialized agents (strategist, content creator, scheduler, analyst, optimizer) using LangGraph cyclic workflows for campaign lifecycle management.*
+### 1️⃣ AI-Driven Multi-Agent Platform for Campaign Planning & Optimization
 November 2025 -- February 2026
+> Built an end-to-end autonomous marketing platform orchestrating 5 specialized agents (strategist, content creator, scheduler, analyst, optimizer) using LangGraph cyclic workflows for campaign lifecycle management.
 [IMAGE:/commandnest.png,/commandnest2.jpg]
 - Architected dynamic tool-calling that enabled autonomous discovery and execution of 12+ marketing APIs.
 - Automated campaign creation, A/B test setup, performance tracking, and budget reallocation with zero manual intervention.
@@ -409,57 +381,32 @@ technologies = {
 }
 \`\`\`
 ---
-**3️⃣ Context-Aware Academic Assistant Using Hybrid RAG Architecture**
-*Designed a production-ready hybrid RAG system combining vector similarity (Qdrant), BM25 keyword search, and Neo4j graph traversal with Cohere reranking, delivering top-3 answer accuracy of 89% on 300+ GATE/JEE exam questions.*
-October 2025 -- December 2025
-[IMAGE:/gis.png,/gis2.jpg]
-- Implemented Self-RAG with adaptive retrieval and critique agents that detect hallucinations and trigger corrective retrieval.
-- Reduced hallucination rate from 31% to 8% compared to a naive RAG baseline.
-- Optimized retrieval to sub-200ms P95 latency via query decomposition, parallel search, and metadata-filtered indexing across 50K+ chunks.
-- Supported 100+ concurrent users with stable response quality and throughput.
-- Achieved 0.91 answer faithfulness, 0.87 context recall, and 0.82 context precision with RAGAS evaluation and LangSmith tracing.
+### 2️⃣ RoadSage: Intelligent Campus Road Perception for Navigation, Safety, and Infrastructure Assessment
+May 2026 -- Present (Ongoing)
+> Built a production-grade, end-to-end autonomous driving decision engine for MNNIT campus roads — ingesting raw, unlabeled road images and outputting FORWARD/LEFT/RIGHT/STOP commands with per-decision confidence scores, lane geometry, GradCAM explainability maps, and real-time obstacle awareness — all without a single manually labeled training image.
+[IMAGE:/geosheild.png,/geosheild2.jpg]
+- Engineered a self-supervised pseudo-labeling pipeline using a 3-model committee disagreement filter (query-by-committee) to generate training labels on 500+ unlabeled MNNIT campus road images — eliminating single-model overconfidence failures on out-of-distribution data and achieving 85% pseudo-label coverage after 2 self-training iterations, without a single manually labeled image.
+- Built a full lane detection stack using UltraFast Lane Detection v2 (UFLDv2-ResNet18/50) with Bird's Eye View IPM transform and 2nd-degree polynomial fitting — computing metric lateral offset and road curvature from a single forward-facing image, achieving lane detection F1 > 0.85 and row-anchor accuracy > 94% on a manually annotated held-out test set.
+- Designed a hybrid decision engine combining geometric rule-based lane analysis (offset/curvature thresholds) with a MobileNetV3-Small ML fallback trained exclusively on 200 human-labeled hard frames (heavy shadow, missing markings, junctions) — achieving 88% overall command accuracy and >99% STOP precision; hard-frame-only training closed a critical training-deployment distribution mismatch that soft pseudo-labels could not fix.
+- Applied post-hoc temperature scaling to calibrate model confidence scores, reducing Expected Calibration Error from 0.14 to 0.03, and deployed a Kalman filter temporal buffer over lane offset, curvature, and obstacle depth state — cutting spurious command flips from 8–15 per 100 frames down to 1–3 while maintaining real-time STOP response within 200ms of hazard appearance.
+- Replaced invalid MiDaS metric distance thresholds with per-frame depth percentile thresholds and scale recovery from known reference objects (standard vehicle/pedestrian dimensions) — fixing a fundamental monocular depth estimation error and achieving STOP precision > 99% with false STOP rate < 5% on campus obstacle test scenarios.
+- Integrated YOLOv8n obstacle detection + MiDaS depth fusion, GradCAM explainability overlays on UFLDv2 backbone activations, and a 7-component React dashboard with WebSocket streaming at 15 FPS — plus full ONNX export for all four models enabling sub-100ms P95 end-to-end inference on CPU hardware with no GPU dependency.
 \`\`\`python
-# Link
-Project - Link
 # Tech Stack
 technologies = {
-  "Languages": ["Python"],
-  "LLM": ["OpenAI embeddings + GPT-4"],
-  "Orchestration": ["LangChain"],
-  "Backend": ["FastAPI REST API"],
-  "Vector Store": ["Qdrant"],
-  "Metadata Store": ["MongoDB"],
-  "Graph DB": ["Neo4j"],
-  "Evaluation": ["RAGAS", "LangSmith"]
+  "Languages": ["Python", "TypeScript"],
+  "CV / Perception": ["UFLDv2 (ResNet18/50)", "YOLOv8n", "NanoDet-Plus-M", "MiDaS", "OpenCV"],
+  "ML": ["PyTorch", "albumentations", "MobileNetV3", "EfficientNet-Lite0"],
+  "Decision & Safety": ["Kalman Filter", "MC Dropout", "Temperature Scaling", "GradCAM"],
+  "Backend": ["FastAPI", "WebSocket", "Uvicorn"],
+  "Frontend": ["React", "TailwindCSS", "Recharts"],
+  "Infra": ["Docker", "ONNX Runtime", "Prometheus", "Grafana", "MLflow"]
 }
 \`\`\`
 ---
-**4️⃣ Last-Pulse -> AI That Thinks Before Life Stops**
-*Developed a comprehensive hospital management system featuring deep learning models for radiology (CNN for X-ray analysis), cardiology (ECG anomaly detection), and pathology (image segmentation)*
-January 2026 -- Present(Ongoing)
-[IMAGE:/LastPulse.jpg,/lastPulse2.jpg]
-- Designed role-based clinical workflows enabling doctors and patients to interact with AI-driven diagnoses.
-- Radiology Module: CNN-based model for detecting pneumonia and fractures from X-ray images.
-- Cardiology Module: LSTM model for real-time ECG anomaly detection.
-- Pathology Module: U-Net architecture for segmenting histopathological images.
-- Web Interface: Built with React and FastAPI for seamless user experience.
-- Designed role-based clinical workflows enabling doctors and patients to interact with AI-driven diagnoses.
-\`\`\`python
-# Source Code
-GitHub - https://github.com/Abhay030405/Last-Pulse
-# Tech Stack
-technologies = {
-    "ML": ["PyTorch"],
-    "CV": ["OpenCV"],
-    "Model" : ["U-Net"],
-    "Database": ["PostgreSQL"],
-    "Deployment": ["FastAPI", "React", "Docker"]
-}
-\`\`\`
----
-**5️⃣ Command Nest -> AI Command Hub for Intelligence Operations**
-*SentinelOps Nexus is an enterprise-grade intelligence operations management platform built to orchestrate complex, high-stakes workflows with precision and security. It unifies mission planning, AI-powered document intelligence, and knowledge management into a single operational command layer.*
+### 3️⃣ Command Nest -> AI Command Hub for Intelligence Operations
 October 2025 -- November 2025
+> SentinelOps Nexus is an enterprise-grade intelligence operations management platform built to orchestrate complex, high-stakes workflows with precision and security. It unifies mission planning, AI-powered document intelligence, and knowledge management into a single operational command layer.
 [IMAGE:/commandnest.png,/commandnest2.jpg]
 - Leveraging RAG-based AI, vector search, and real-time WebSocket updates, the platform enables fast, context-aware decision-making.
 - Robust role-based access control with multi-factor authentication ensures security across teams, while Kanban-driven mission tracking, facility operations, analytics, and multi-channel notifications keep every operation synchronized.
@@ -479,9 +426,9 @@ technologies = {
 }
 \`\`\`
 ---
-**6️⃣ GeoSheild -> Proof that deep learning, when aimed right, can see disasters before humans do.**
-*Built an AI system that hunts landslides from the sky using UAV and Remote Sensing imagery and deep learning.*
+### 4️⃣ GeoSheild -> Proof that deep learning, when aimed right, can see disasters before humans do.
 September 2025 -- October 2025
+> Built an AI system that hunts landslides from the sky using UAV and Remote Sensing imagery and deep learning.
 [IMAGE:/geosheild.png,/geosheild2.jpg]
 - Engineered a Mask R-CNN–based instance segmentation pipeline to detect and isolate disaster-prone regions with pixel-level precision.
 - Trained a multi-class model to simultaneously identify Landslides, Water Bodies, Vegetation, and Buildings in complex aerial scenes.
@@ -502,26 +449,8 @@ technologies = {
 }
 \`\`\`
 ---
-**7️⃣ Market Mestro - Multi Agent System**
-*Market Maestro is a multi-agent AI-driven financial research platform engineered to analyze markets as a coordinated intelligence system rather than a single model. It orchestrates autonomous agents—Market Analyst, Event Monitor, Risk Evaluator, and Portfolio Optimizer—using LangChain and LangGraph to fetch live market data, track financial events, quantify risk, and generate data-backed investment strategies.*
-[IMAGE:/stockify.png,/stofiky2.png]
-- Multi-Agent AI System Engineered to Decode Markets, Risk, and Opportunity
-- Through a unified reasoning layer, the platform connects news sentiment, market movements, and portfolio metrics into actionable insights.
-- With real-time visualization, explainable AI summaries, and strategy generation, Market Maestro transforms raw financial signals into structured, decision-ready intelligence.
-\`\`\`python
-# Source Code
-GitHub - https://github.com/Abhay030405/market-maestro
-# Tech Stack
-technologies = {
-    "Languages": ["Python"],
-    "Artificial Intelligence": ["Langchain", "LangGarph"] 
-    "Visualization Tools": ["Numpy", "Matplotlib"],
-    "Deployment": ["FastAPI"]
-}
-\`\`\`
----
-**8️⃣ Nueral Watch - Drift AI Assistant**
-*Neural Watch is an AI-powered data drift monitoring system designed to ensure the reliability and performance of machine learning models in production. It combines statistical methods and machine learning techniques to detect shifts in data distributions that can impact model accuracy.*
+### 5️⃣ Nueral Watch - Drift AI Assistant
+> Neural Watch is an AI-powered data drift monitoring system designed to ensure the reliability and performance of machine learning models in production. It combines statistical methods and machine learning techniques to detect shifts in data distributions that can impact model accuracy.
 [IMAGE:/drift.png,/drift2.png]
 Key Features:
 - Real-Time Data Monitoring: Continuously tracks incoming data streams for changes.
@@ -543,23 +472,8 @@ technologies = {
 }
 \`\`\`
 ---
-**9️⃣ Neuro Foundary - Collaborative Agentic Platform**
-*Build a Collaborative Agentic Platform proof-of-concept, an intelligent system that automates the end-to-end development of full-stack applications.*
-[IMAGE:/multi.png,/multi2.png]
-- The platform should connect with Azure DevOps (ADO), read project user stories, and orchestrate a team of specialized AI agents to generate, test, and integrate code.
-- The main goal is to drastically reduce development time, automate manual coding tasks, and standardize application architecture by translating plain-text project requirements directly into deployable, full-stack code.
-\`\`\`python
-# Tech Stack
-technologies = {
-    "Languages": ["Python"],
-    "Artificial Intelligence": ["Langchain", "LangGarph"]
-    "Visualization Tools": ["Numpy", "Matplotlib"],
-    "Deployment": ["FastAPI"]
-}
-\`\`\`
----
-**🔟 FairLensAI - Bias Detection**
-*FairLens AI is an end-to-end system designed to explain machine learning model predictions and detect bias across user demographics.*
+### 6️⃣ FairLensAI - Bias Detection
+> FairLens AI is an end-to-end system designed to explain machine learning model predictions and detect bias across user demographics.
 [IMAGE:/bias.png,/bias2.png]
 It combines:
 - SHAP & LIME: Feature-level interpretability for predictions -Bias Detection Metrics: Identifies fairness issues across groups
@@ -581,8 +495,8 @@ technologies = {
 }
 \`\`\`
 ---
-**1️⃣1️⃣ Conway Game of Life Simulator **
-*Conway's Game of Life is a cellular automaton devised by the British mathematician John Horton Conway. This project implements the simulation in Python using object-oriented programming principles and provides both visual and console-based representations of the evolving grid.*
+### 7️⃣ Conway Game of Life Simulator
+> Conway's Game of Life is a cellular automaton devised by the British mathematician John Horton Conway. This project implements the simulation in Python using object-oriented programming principles and provides both visual and console-based representations of the evolving grid.
 [IMAGE:/conway.png,/conway2.png]
 This simulation follows the rules of Conway's Game of Life:
 1. Any live cell with 2 or 3 live neighbors survives.
@@ -680,6 +594,11 @@ const welcomeMessage = `Welcome to my portfolio! I'm here to help you learn more
 
 Or simply click on any section in the sidebar to explore!`;
 
+const stripNavFooter = (content: string) => {
+  const idx = content.indexOf('\n---\n## What to learn more about me ?');
+  return idx !== -1 ? content.slice(0, idx) : content;
+};
+
 const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaProps) => {
   const [messages, setMessages] = useState<Message[]>([
     { id: "welcome", type: "assistant", content: welcomeMessage },
@@ -690,9 +609,38 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
   const inputRef = useRef<HTMLInputElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to show the new message
+  // Typewriter for welcome screen
+  const twItems = ["About Me", "Experience", "Skills", "Projects", "Achievements", "Research", "Contact Me"];
+  const [twText, setTwText]         = useState("");
+  const [twIndex, setTwIndex]       = useState(0);
+  const [twDeleting, setTwDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = twItems[twIndex];
+    if (!twDeleting && twText === current) {
+      const t = setTimeout(() => setTwDeleting(true), 1400);
+      return () => clearTimeout(t);
+    }
+    const delay = twDeleting ? 45 : 95;
+    const t = setTimeout(() => {
+      if (twDeleting) {
+        setTwText(prev => prev.slice(0, -1));
+        if (twText.length <= 1) { setTwDeleting(false); setTwIndex(p => (p + 1) % twItems.length); }
+      } else {
+        setTwText(current.slice(0, twText.length + 1));
+      }
+    }, delay);
+    return () => clearTimeout(t);
+  }, [twText, twDeleting, twIndex]);
+
+  // Only scroll when user is already near the bottom (within 200px)
   const scrollToMessage = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const container = chatContainerRef.current;
+    if (!container) return;
+    const distanceFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
+    if (distanceFromBottom < 200) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   };
 
   // Track the last processed section to prevent duplicates
@@ -719,7 +667,7 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
           type: "assistant",
-          content: sectionData[activeSection].content,
+          content: stripNavFooter(sectionData[activeSection].content),
           section: activeSection,
           images: sectionData[activeSection].images,
         };
@@ -758,7 +706,7 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
       // Check for section commands
       Object.keys(sectionData).forEach((key) => {
         if (query.includes(key)) {
-          responseContent = sectionData[key].content;
+          responseContent = stripNavFooter(sectionData[key].content);
           matchedSection = key;
         }
       });
@@ -798,14 +746,14 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
   };
 
   return (
-    <div className="flex-1 flex flex-col h-screen bg-background">
+    <div className="flex-1 flex flex-col h-full min-h-0 min-w-0 overflow-x-hidden bg-background">
       {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border">
-        <div className="flex items-center gap-2">
+      <div className="flex items-center justify-between pl-12 md:pl-4 pr-4 py-3 border-b border-border flex-shrink-0">
+        <div className="hidden md:flex items-center gap-2">
           <span className="text-foreground font-medium">ChatGPT</span>
           <span className="text-muted-foreground text-sm">5.2 ▼</span>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ml-auto">
           <button className="p-2 rounded-lg hover:bg-accent transition-colors text-muted-foreground">
             <p><b>Abhay Agarwal</b></p>
           </button>
@@ -813,8 +761,88 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
       </div>
 
       {/* Messages Area */}
-      <div ref={chatContainerRef} className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto px-4 py-8">
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto overflow-x-hidden min-h-0">
+
+        {/* Mobile welcome — tech enthusiast edition */}
+        {messages.length === 1 && (
+          <div className="md:hidden flex flex-col items-center justify-center min-h-full px-5 py-8 gap-7 relative overflow-hidden">
+
+            {/* Subtle dot-grid background */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-[0.06]"
+              style={{
+                backgroundImage: "radial-gradient(circle, white 1px, transparent 1px)",
+                backgroundSize: "28px 28px",
+              }}
+            />
+
+            {/* ── AVATAR ── */}
+            <div className="relative flex items-center justify-center animate-float z-10">
+              {/* Avatar photo */}
+              <div className="w-24 h-24 rounded-full overflow-hidden border border-white/10">
+                <img
+                  src="/206020807.jpg"
+                  alt="Abhay Agarwal"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+
+            {/* ── TEXT BLOCK ── */}
+            <div className="flex flex-col items-center gap-3 text-center z-10">
+
+              {/* Status badge */}
+              <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/15 bg-white/5">
+                <div className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                <span className="text-[10px] font-semibold text-white/60 tracking-[0.15em] uppercase">Open to Opportunities</span>
+              </div>
+
+              {/* Name */}
+              <h1 className="text-[2rem] font-black tracking-tight leading-none text-white">
+                ABHAY AGARWAL
+              </h1>
+
+              {/* Monospace role line */}
+              <p className="font-mono text-[11px] text-white/40 tracking-widest">
+                {"< AI Engineer · Competitive Coder />"}
+              </p>
+
+              {/* Typewriter terminal prompt */}
+              <div className="flex items-center gap-1.5 font-mono text-[13px] text-white/40 mt-1">
+                <span className="text-white/70">▶</span>
+                <span className="text-white/40">explore:</span>
+                <span className="text-white/80">{twText}</span>
+                <span className="text-white/70 animate-blink-cursor">█</span>
+              </div>
+            </div>
+
+
+            {/* ── SUGGESTION CHIPS ── */}
+            <div className="grid grid-cols-2 gap-2 w-full max-w-xs z-10">
+              {[
+                { label: "About Me",     icon: User,         section: "about"        },
+                { label: "Skills",       icon: Code,         section: "skills"       },
+                { label: "Experience",   icon: Briefcase,    section: "experience"   },
+                { label: "Projects",     icon: FolderKanban, section: "projects"     },
+                { label: "Achievements", icon: Trophy,       section: "achievements" },
+                { label: "Research",     icon: FileText,     section: "research"     },
+                { label: "Contact",      icon: Mail,         section: "contact"      },
+              ].map((item) => (
+                <button
+                  key={item.section}
+                  onClick={() => onSectionChange(item.section)}
+                  className="group flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/25 active:scale-95 transition-all duration-200 text-sm text-left col-span-1 last:col-span-2 last:justify-center"
+                >
+                  <item.icon className="w-4 h-4 text-white/30 group-hover:text-white/70 transition-colors flex-shrink-0" />
+                  <span className="font-medium text-white/50 group-hover:text-white/90 transition-colors">{item.label}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Desktop layout + mobile conversation view */}
+        <div className={`max-w-3xl mx-auto px-3 md:px-4 py-4 md:py-8 ${messages.length === 1 ? "hidden md:block" : "block"}`}>
           {messages.length === 1 && (
             <div className="text-center mb-8">
               <h1 className="text-3xl font-semibold text-foreground mb-4">
@@ -824,19 +852,21 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
           )}
 
           <div className="space-y-6">
-            {messages.map((message, index) => (
-              <ChatMessage 
-                key={message.id} 
-                message={message} 
-                isLatest={index === messages.length - 1}
-              />
-            ))}
+            {messages.map((message, index) => {
+              const isLast = index === messages.length - 1;
+              return (
+                <div key={message.id} className={message.id === "welcome" ? "hidden md:block" : ""}>
+                  <ChatMessage
+                    message={message}
+                    isLatest={isLast}
+                    onSectionChange={isLast && message.type === "assistant" && messages.length > 1 ? onSectionChange : undefined}
+                  />
+                </div>
+              );
+            })}
 
             {isTyping && (
-              <div className="flex items-start gap-4">
-                <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-primary-foreground text-sm font-medium">
-                  A
-                </div>
+              <div className="flex items-start">
                 <div className="flex items-center gap-1 pt-2">
                   <div className="w-2 h-2 bg-muted-foreground rounded-full animate-typing" style={{ animationDelay: "0s" }} />
                   <div className="w-2 h-2 bg-muted-foreground rounded-full animate-typing" style={{ animationDelay: "0.2s" }} />
@@ -851,16 +881,10 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
       </div>
 
       {/* Input Area */}
-      <div className="px-4 pb-6">
+      <div className="px-3 md:px-4 pb-4 md:pb-6 flex-shrink-0">
         <div className="max-w-3xl mx-auto">
           <form onSubmit={handleSubmit}>
             <div className="chat-input-container">
-              <button
-                type="button"
-                className="p-1 rounded-full hover:bg-accent transition-colors text-muted-foreground"
-              >
-                <Plus className="w-5 h-5" />
-              </button>
               <input
                 ref={inputRef}
                 type="text"
@@ -870,21 +894,15 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
                 className="flex-1 bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground text-sm"
               />
               <button
-                type="button"
-                className="p-1 rounded-full hover:bg-accent transition-colors text-muted-foreground"
-              >
-                <Mic className="w-5 h-5" />
-              </button>
-              <button
                 type="submit"
                 disabled={!inputValue.trim()}
-                className="p-1.5 rounded-full bg-muted hover:bg-accent transition-colors text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed"
+                className="p-1.5 rounded-full bg-muted hover:bg-accent transition-colors text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed border-2 border-muted-foreground/40"
               >
                 <ArrowUp className="w-4 h-4" />
               </button>
             </div>
           </form>
-          <p className="text-xs text-center text-muted-foreground mt-3">
+          <p className="hidden md:block text-xs text-center text-muted-foreground mt-3">
             Type a command to explore my portfolio. Try "about", "skills", or "projects"!
           </p>
         </div>
