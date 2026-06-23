@@ -606,6 +606,7 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const latestMessageRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
@@ -633,14 +634,9 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
     return () => clearTimeout(t);
   }, [twText, twDeleting, twIndex]);
 
-  // Only scroll when user is already near the bottom (within 200px)
+  // Scroll to the start of the latest message
   const scrollToMessage = () => {
-    const container = chatContainerRef.current;
-    if (!container) return;
-    const distanceFromBottom = container.scrollHeight - container.scrollTop - container.clientHeight;
-    if (distanceFromBottom < 200) {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
+    latestMessageRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
   // Track the last processed section to prevent duplicates
@@ -855,7 +851,7 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
             {messages.map((message, index) => {
               const isLast = index === messages.length - 1;
               return (
-                <div key={message.id} className={message.id === "welcome" ? "hidden md:block" : ""}>
+                <div key={message.id} ref={isLast ? latestMessageRef : undefined} className={message.id === "welcome" ? "hidden md:block" : ""}>
                   <ChatMessage
                     message={message}
                     isLatest={isLast}

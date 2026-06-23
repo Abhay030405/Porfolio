@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "@/components/portfolio/Sidebar";
 import ChatArea from "@/components/portfolio/ChatArea";
 
@@ -6,6 +6,26 @@ const Index = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const [chatHistory, setChatHistory] = useState<string[]>([]);
   const [chatKey, setChatKey] = useState(0);
+  const [containerHeight, setContainerHeight] = useState<string>("100dvh");
+
+  // Visual Viewport API — keeps layout above keyboard on iOS Safari
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+
+    const update = () => {
+      setContainerHeight(`${viewport.height + viewport.offsetTop}px`);
+    };
+
+    viewport.addEventListener("resize", update);
+    viewport.addEventListener("scroll", update);
+    update();
+
+    return () => {
+      viewport.removeEventListener("resize", update);
+      viewport.removeEventListener("scroll", update);
+    };
+  }, []);
 
   const handleNewChat = () => {
     setActiveSection(null);
@@ -28,14 +48,12 @@ const Index = () => {
 
   const handleSelectChat = (chatId: string) => {
     if (chatId === "search") {
-      // Could implement search functionality
       return;
     }
-    // Handle chat history selection
   };
 
   return (
-    <div className="flex h-[100dvh] overflow-hidden bg-background">
+    <div className="flex overflow-hidden bg-background" style={{ height: containerHeight }}>
       <Sidebar
         onNewChat={handleNewChat}
         onSelectSection={handleSelectSection}

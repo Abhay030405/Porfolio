@@ -25,7 +25,7 @@ interface ChatMessageProps {
   onSectionChange?: (section: string) => void;
 }
 
-const CHARS_PER_SECOND = 200;
+const CHARS_PER_SECOND = 400;
 
 const ChatMessage = ({ message, isLatest = false, onSectionChange }: ChatMessageProps) => {
   const [displayedContent, setDisplayedContent] = useState(
