@@ -551,6 +551,29 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSi
   const inputRef = useRef<HTMLInputElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
+  // Typewriter for header (looping through phrases)
+  const headerPhrases = ["Welcome to my portfolio !!", "Hi, Myself Abhay Agarwal an AI engineer"];
+  const [headerText, setHeaderText] = useState("");
+  const [headerDeleting, setHeaderDeleting] = useState(false);
+  const [headerIndex, setHeaderIndex] = useState(0);
+  useEffect(() => {
+    const current = headerPhrases[headerIndex];
+    if (!headerDeleting && headerText === current) {
+      const t = setTimeout(() => setHeaderDeleting(true), 1800);
+      return () => clearTimeout(t);
+    }
+    const delay = headerDeleting ? 40 : 60;
+    const t = setTimeout(() => {
+      if (headerDeleting) {
+        setHeaderText(prev => prev.slice(0, -1));
+        if (headerText.length <= 1) { setHeaderDeleting(false); setHeaderIndex(p => (p + 1) % headerPhrases.length); }
+      } else {
+        setHeaderText(current.slice(0, headerText.length + 1));
+      }
+    }, delay);
+    return () => clearTimeout(t);
+  }, [headerText, headerDeleting, headerIndex]);
+
   // Typewriter for welcome screen
   const twItems = ["About Me", "Experience", "Skills", "Projects", "Achievements", "Contact Me"];
   const [twText, setTwText]         = useState("");
@@ -682,14 +705,18 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSi
     <div className="flex-1 flex h-full min-h-0 min-w-0 overflow-hidden bg-background">
 
       {/* ── Chat column ── */}
-      <div className={`flex flex-col h-full min-h-0 overflow-x-hidden relative transition-all duration-300 ${showResumePanel ? "w-[45%]" : "w-full"}`}>
+      <div className="flex flex-col h-full min-h-0 overflow-x-hidden relative w-full">
 
-      {/* View Resume chip — top right */}
-      <div className="absolute top-3 right-4 z-10">
+      {/* Header bar */}
+      <div className="flex items-center justify-end md:justify-between px-4 py-2 border-b border-white/10 flex-shrink-0 z-10">
+        <span className="hidden md:inline-flex items-center text-2xl font-medium text-white tracking-wide ml-8" style={{ wordSpacing: "0.15em", fontFamily: "'EB Garamond', serif" }}>
+          {headerText}
+          <span className="ml-0.5 animate-blink-cursor">|</span>
+        </span>
         <button
           type="button"
-          onClick={() => { if (showResumePanel) { setShowResumePanel(false); } else { setShowResumePanel(true); onCollapseSidebar(); } }}
-          className="flex items-center gap-2 px-3 py-2 rounded-xl text-muted-foreground hover:text-foreground text-sm transition-all duration-200 md:bg-[#2C2C2A] md:hover:bg-accent md:border md:border-white/10 md:hover:border-orange-700"
+          onClick={() => setShowResumePanel(true)}
+          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#2C2C2A] hover:bg-accent border border-white/10 hover:border-orange-700 text-muted-foreground hover:text-foreground text-sm transition-all duration-200"
         >
           <svg viewBox="0 0 24 24" className="hidden md:block w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
@@ -703,11 +730,11 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSi
       </div>
 
       {/* Messages Area */}
-      <div ref={chatContainerRef} className={`overflow-y-auto overflow-x-hidden min-h-0 ${messages.length === 1 ? "md:hidden" : "flex-1"}`}>
+      <div ref={chatContainerRef} className={`overflow-y-auto overflow-x-hidden min-h-0 flex-1 ${messages.length === 1 ? "md:hidden" : ""}`}>
 
         {/* Mobile welcome — tech enthusiast edition */}
         {messages.length === 1 && (
-          <div className="md:hidden flex flex-col items-center justify-center min-h-full px-5 py-8 gap-7 relative overflow-hidden">
+          <div className="md:hidden flex flex-col items-center justify-center min-h-full px-5 pt-8 pb-8 gap-7 relative overflow-hidden">
 
             {/* Subtle dot-grid background */}
             <div
@@ -823,7 +850,7 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSi
       />
 
       {/* Input Area */}
-      <div className="px-3 md:px-4 pb-4 md:pb-6 flex-shrink-0">
+      <div className="px-3 md:px-4 pb-5 md:pb-6 flex-shrink-0">
         <div
           className="w-full mx-auto"
           style={{
@@ -843,7 +870,7 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSi
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="What you want to Know about me?"
+                placeholder={messages.length === 1 ? "What you want to Know about me?" : ""}
                 className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground text-base px-4 pt-4"
               />
               {/* Bottom bar */}
@@ -966,18 +993,22 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSi
       {/* ── close chat column ── */}
       </div>
 
-      {/* ── Resume panel ── */}
+      {/* ── Resume full-screen overlay ── */}
       {showResumePanel && (
-        <div className="flex flex-col h-full border-l border-border flex-1 min-w-0">
-          {/* Panel header */}
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-[#1C1C1B] flex-shrink-0">
-            <div className="flex items-center gap-2 text-sm text-foreground font-medium">
-              <svg viewBox="0 0 24 24" className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-              </svg>
-              <span>Abhay Agarwal — Resume</span>
-            </div>
+        <div className="fixed inset-0 z-50 flex flex-col bg-[#1C1C1B]">
+          {/* Overlay header */}
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/10 flex-shrink-0">
+            <button
+              type="button"
+              onClick={() => setShowResumePanel(false)}
+              className="p-1.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+              title="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <span className="text-sm font-medium text-foreground truncate mx-3">Abhay Agarwal — Resume</span>
+
             <div className="flex items-center gap-1">
               <button
                 type="button"
@@ -995,18 +1026,10 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSi
               >
                 <Download className="w-4 h-4" />
               </button>
-              <button
-                type="button"
-                onClick={() => setShowResumePanel(false)}
-                className="p-1.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
-                title="Close"
-              >
-                <X className="w-4 h-4" />
-              </button>
             </div>
           </div>
 
-          {/* Panel body — embedded resume */}
+          {/* Overlay body */}
           <div className="flex-1 overflow-hidden">
             <ResumeViewer />
           </div>

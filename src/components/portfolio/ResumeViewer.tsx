@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -6,7 +6,7 @@ import { ZoomIn, ZoomOut, RotateCcw } from "lucide-react";
 
 pdfjs.GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
 
-const MIN_SCALE = 0.5;
+const MIN_SCALE = .5;
 const MAX_SCALE = 3.0;
 const ZOOM_STEP = 0.15;
 
@@ -15,18 +15,17 @@ const ResumeViewer = () => {
   const [baseWidth, setBaseWidth] = useState<number>(600);
   const [scale, setScale] = useState<number>(1);
   const [showZoomHint, setShowZoomHint] = useState(false);
-  const [pageHeights, setPageHeights] = useState<number[]>([]);
   const containerRef = useRef<HTMLDivElement>(null);
   const hintTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const scaleRef = useRef<number>(1);
 
   const clampScale = (s: number) => Math.min(Math.max(s, MIN_SCALE), MAX_SCALE);
 
-  const flashHint = useCallback(() => {
+  const flashHint = () => {
     setShowZoomHint(true);
     if (hintTimerRef.current) clearTimeout(hintTimerRef.current);
     hintTimerRef.current = setTimeout(() => setShowZoomHint(false), 1200);
-  }, []);
+  };
 
   useEffect(() => {
     const el = containerRef.current;
@@ -53,28 +52,15 @@ const ResumeViewer = () => {
       resizeObserver.disconnect();
       el.removeEventListener("wheel", handleWheel);
     };
-  }, [flashHint]);
-
-  const handleDocumentLoad = useCallback(
-    async ({ numPages: n, ...pdf }: { numPages: number; [key: string]: unknown }) => {
-      setNumPages(n);
-      const heights: number[] = [];
-      for (let i = 1; i <= n; i++) {
-        // @ts-expect-error react-pdf passes the raw pdf.js doc
-        const page = await (pdf as { getPage: (n: number) => Promise<{ getViewport: (o: { scale: number }) => { height: number; width: number } }> }).getPage(i);
-        const vp = page.getViewport({ scale: 1 });
-        heights.push((vp.height / vp.width) * baseWidth);
-      }
-      setPageHeights(heights);
-    },
-    [baseWidth]
-  );
+  }, []);
 
   const zoomBy = (delta: number) => {
     const next = clampScale(scaleRef.current + delta);
     scaleRef.current = next;
     setScale(next);
   };
+
+  const pageWidth = Math.round(baseWidth * scale);
 
   return (
     <div className="relative flex flex-col h-full">
@@ -106,7 +92,7 @@ const ResumeViewer = () => {
         </button>
       </div>
 
-      {/* Pinch hint */}
+      {/* Zoom hint toast */}
       <div
         className={`absolute top-12 left-1/2 -translate-x-1/2 z-20 px-3 py-1.5 rounded-full bg-black/70 text-white text-xs whitespace-nowrap transition-opacity duration-300 pointer-events-none ${
           showZoomHint ? "opacity-100" : "opacity-0"
@@ -122,7 +108,7 @@ const ResumeViewer = () => {
       >
         <Document
           file="/resume_abhay.pdf"
-          onLoadSuccess={handleDocumentLoad}
+          onLoadSuccess={({ numPages }) => setNumPages(numPages)}
           loading={
             <div className="flex items-center justify-center mt-20 text-muted-foreground text-sm">
               Loading resume...
@@ -134,31 +120,14 @@ const ResumeViewer = () => {
             </div>
           }
         >
-          {Array.from({ length: numPages }, (_, i) => {
-            const naturalHeight = pageHeights[i] ?? baseWidth * 1.414;
-            return (
-              <div
-                key={`page_${i + 1}`}
-                style={{
-                  width: baseWidth * scale,
-                  height: naturalHeight * scale,
-                  overflow: "hidden",
-                  flexShrink: 0,
-                }}
-                className="shadow-lg"
-              >
-                <div
-                  style={{
-                    transform: `scale(${scale})`,
-                    transformOrigin: "top left",
-                    width: baseWidth,
-                  }}
-                >
-                  <Page pageNumber={i + 1} width={baseWidth} />
-                </div>
-              </div>
-            );
-          })}
+          {Array.from({ length: numPages }, (_, i) => (
+            <Page
+              key={`page_${i + 1}`}
+              pageNumber={i + 1}
+              width={pageWidth}
+              className="shadow-lg mb-4"
+            />
+          ))}
         </Document>
       </div>
     </div>
