@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { User, Code, Briefcase, FolderKanban, Trophy, FileText, Mail } from "lucide-react";
+import { User, Code, Briefcase, FolderKanban, Trophy, Mail } from "lucide-react";
 
 const NAV_CHIPS = [
   { label: "About Me",     icon: User,         section: "about"        },
@@ -7,7 +7,6 @@ const NAV_CHIPS = [
   { label: "Experience",   icon: Briefcase,    section: "experience"   },
   { label: "Projects",     icon: FolderKanban, section: "projects"     },
   { label: "Achievements", icon: Trophy,       section: "achievements" },
-  { label: "Research",     icon: FileText,     section: "research"     },
   { label: "Contact",      icon: Mail,         section: "contact"      },
 ];
 

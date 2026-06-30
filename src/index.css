@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=EB+Garamond:wght@400;500;600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -8,7 +8,7 @@
 
 @layer base {
   :root {
-    --background: 0 0% 13%;
+    --background: 60 2% 12%;
     --foreground: 0 0% 95%;
 
     --card: 0 0% 10%;
@@ -32,19 +32,19 @@
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 18%;
+    --border: 0 0% 30%;
+    --input: 60 2% 17%;
     --ring: 0 0% 40%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 9%;
+    --sidebar-background: 60 2% 11%;
     --sidebar-foreground: 0 0% 85%;
     --sidebar-primary: 0 0% 95%;
     --sidebar-primary-foreground: 0 0% 9%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 0 0% 15%;
+    --sidebar-border: 0 0% 28%;
     --sidebar-ring: 0 0% 40%;
     --sidebar-muted: 0 0% 55%;
 
@@ -59,7 +59,7 @@
   }
 
   .dark {
-    --background: 0 0% 13%;
+    --background: 60 2% 12%;
     --foreground: 0 0% 95%;
 
     --card: 0 0% 10%;
@@ -83,17 +83,17 @@
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 18%;
+    --border: 0 0% 30%;
+    --input: 60 2% 17%;
     --ring: 0 0% 40%;
 
-    --sidebar-background: 0 0% 9%;
+    --sidebar-background: 60 2% 11%;
     --sidebar-foreground: 0 0% 85%;
     --sidebar-primary: 0 0% 95%;
     --sidebar-primary-foreground: 0 0% 9%;
     --sidebar-accent: 0 0% 15%;
     --sidebar-accent-foreground: 0 0% 95%;
-    --sidebar-border: 0 0% 15%;
+    --sidebar-border: 0 0% 28%;
     --sidebar-ring: 0 0% 40%;
   }
 }
@@ -124,7 +124,17 @@
   }
 
   .chat-input-container {
-    @apply flex items-center gap-3 bg-input border border-border rounded-full px-4 py-3 focus-within:border-ring transition-colors;
+    @apply relative flex flex-col bg-input rounded-[10px];
+    height: 126px;
+    min-height: 126px;
+    max-height: 126px;
+    transition: border-color 0.15s ease, height 0.8s cubic-bezier(0.4, 0, 0.2, 1), min-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .chat-input-container.chat-input-compact {
+    height: 88px;
+    min-height: 88px;
+    max-height: 88px;
   }
 
   .section-link {
@@ -164,4 +174,67 @@
     white-space: pre-wrap;
     word-break: break-all;
   }
+}
+
+/* ── Running border ── */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-border {
+  to { --border-angle: 360deg; }
+}
+
+.running-border-wrap {
+  padding: 1.5px;
+  border-radius: 0.75rem;
+  background: conic-gradient(
+    from var(--border-angle),
+    #3b1a08 0%,
+    #3b1a08 78%,
+    #92400e 86%,
+    #b45309 92%,
+    #92400e 96%,
+    #3b1a08 100%
+  );
+  animation: spin-border 3s linear infinite;
+}
+
+/* ── Scrollbar — thin mobile-style ── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+*:hover {
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+  transition: background 0.2s;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }

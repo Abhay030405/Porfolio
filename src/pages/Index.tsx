@@ -7,6 +7,7 @@ const Index = () => {
   const [chatHistory, setChatHistory] = useState<string[]>([]);
   const [chatKey, setChatKey] = useState(0);
   const [containerHeight, setContainerHeight] = useState<string>("100dvh");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   // Visual Viewport API — keeps layout above keyboard on iOS Safari
   useEffect(() => {
@@ -47,8 +48,13 @@ const Index = () => {
   };
 
   const handleSelectChat = (chatId: string) => {
-    if (chatId === "search") {
-      return;
+    if (chatId === "search") return;
+    const knownSections = ["about", "experience", "skills", "achievements", "projects", "contact"];
+    const matched = knownSections.find((key) => chatId.toLowerCase().includes(key));
+    if (matched) {
+      // Reset to null first so useEffect in ChatArea always fires, even for the same section
+      setActiveSection(null);
+      setTimeout(() => setActiveSection(matched), 10);
     }
   };
 
@@ -60,12 +66,15 @@ const Index = () => {
         activeSection={activeSection}
         chatHistory={chatHistory}
         onSelectChat={handleSelectChat}
+        isCollapsed={sidebarCollapsed}
+        onCollapsedChange={setSidebarCollapsed}
       />
       <ChatArea
         key={chatKey}
         activeSection={activeSection}
         onSectionChange={handleSectionChange}
         onAddToHistory={handleAddToHistory}
+        onCollapseSidebar={() => setSidebarCollapsed(true)}
       />
     </div>
   );

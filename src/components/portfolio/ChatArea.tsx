@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { ArrowUp, User, Code, Briefcase, Trophy, FileText, FolderKanban, Mail } from "lucide-react";
+import { ArrowUp, Plus, Mic, ChevronDown, X, Download, ExternalLink, User, Code, Briefcase, Trophy, FolderKanban, Mail } from "lucide-react";
 import ChatMessage from "./ChatMessage";
+import ResumeViewer from "./ResumeViewer";
 
 interface Message {
   id: string;
@@ -14,6 +15,7 @@ interface ChatAreaProps {
   activeSection: string | null;
   onSectionChange: (section: string) => void;
   onAddToHistory: (query: string) => void;
+  onCollapseSidebar: () => void;
 }
 
 const sectionData: Record<string, { title: string; content: string; images?: string[] }> = {
@@ -292,67 +294,6 @@ The following milestones reflect consistency, curiosity, and execution over time
 • \`projects\` - Browse my projects
 • \`contact\` - Get in touch`,
   },
-  research: {
-    title: "My Research Progress",
-    content: `I work on applying Artificial Intelligence to real-world scientific and engineering problems, especially where data is complex and decisions matter.
-My research combines computer vision, remote sensing, and reasoning-based AI systems.
----
-## Current Research Focus
-**🌍 Pixel-Level Landslide Intelligence (Remote Sensing)**
-[IMAGE:/geosheild.png,/geosheild2.jpg]
-I am developing a deep-learning system to analyze satellite imagery and detect landslide regions at pixel-level precision instead of simple image classification.
-The goal is not only to detect whether a landslide exists, but where exactly it exists on terrain.
-*Key work includes:*
-• Satellite image preprocessing and augmentation
-• Semantic segmentation models (U-Net style architectures)
-• Terrain feature learning from remote sensing data
-• Risk mapping for disaster monitoring
-> The system aims to support early warning and environmental monitoring applications.
----
-**🧊 Glacier Burst Detection (Remote Sensing)**
-[IMAGE:/glasier.jpg,/glasier2.jpg]
-Glacier lake outburst floods (GLOFs) are dangerous events that are difficult to monitor manually in mountainous regions.
-I am building a model that studies multi-temporal satellite imagery to identify patterns indicating a potential glacier burst.
-*Research focus:*
-• Change detection across time-series satellite images
-• Automated alert-style prediction pipeline
-• Terrain feature learning from remote sensing data
-• Detecting abnormal expansion or structural changes in glacial lakes
-> The objective is to assist large-scale monitoring where human inspection is impractical.
----
-**🧠 Multi-Phase Chain-of-Thought Reasoning using LLMs**
-[IMAGE:/chainofThoughts.png,/chainofThoughts.jpg]
-Alongside computer vision, I am researching reasoning-focused AI systems using Large Language Models.
-*I am designing a multi-phase chain-of-thought framework where an LLM:*
-• Understands a complex task
-• Breaks it into structured steps
-• Verifies intermediate reasoning
-• Produces a validated final output
-*This work explores:*
-• LangChain-based orchestration
-• tool-augmented reasoning
-• structured planning agents
-• reliability and reasoning accuracy of LLM systems
-> The goal is to move LLMs from simple chat responses to decision-making assistants.
----
-**Research Methodology**
-My research workflow follows an engineering-style pipeline:
-1. Problem Understanding — Study the real-world system first
-2. Data Preparation — Cleaning, labeling, and augmentation
-3. Model Design — Selecting or designing appropriate architectures
-4. Evaluation — Error analysis and failure-case study
-5. Iteration — Improve based on observations and metrics
-> I focus heavily on why a model fails, not just when it succeeds.
----
-## What to learn more about me ?
-**Type any of these commands:**
-• \`about\` - Get a short overview about me and how I work
-• \`experience\` - View my work experience
-• \`skills\` - See my technical skills
-• \`achievements\` - View my achievements
-• \`projects\` - Browse my projects
-• \`contact\` - Get in touch`,
-  },
   projects: {
     title: "My Projects",
     content: `Here's a showcase of my key projects 🚀
@@ -588,7 +529,6 @@ const welcomeMessage = `Welcome to my portfolio! I'm here to help you learn more
 • \`experience\` - View my experience
 • \`skills\` - See my technical skills
 • \`achievements\` - View my achievements
-• \`research\` - Explore my research
 • \`projects\` - Browse my projects
 • \`contact\` - Get in touch
 
@@ -596,22 +536,23 @@ Or simply click on any section in the sidebar to explore!`;
 
 const stripNavFooter = (content: string) => {
   const idx = content.indexOf('\n---\n## What to learn more about me ?');
-  return idx !== -1 ? content.slice(0, idx) : content;
+  return idx === -1 ? content : content.slice(0, idx);
 };
 
-const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaProps) => {
+const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSidebar }: ChatAreaProps) => {
   const [messages, setMessages] = useState<Message[]>([
     { id: "welcome", type: "assistant", content: welcomeMessage },
   ]);
   const [inputValue, setInputValue] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [showResumePanel, setShowResumePanel] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const latestMessageRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Typewriter for welcome screen
-  const twItems = ["About Me", "Experience", "Skills", "Projects", "Achievements", "Research", "Contact Me"];
+  const twItems = ["About Me", "Experience", "Skills", "Projects", "Achievements", "Contact Me"];
   const [twText, setTwText]         = useState("");
   const [twIndex, setTwIndex]       = useState(0);
   const [twDeleting, setTwDeleting] = useState(false);
@@ -707,14 +648,13 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
         }
       });
 
-      if (!responseContent) {
+      if (responseContent === "") {
         responseContent = `I'm not sure what you're looking for. Try these commands:
-        
+
 • \`about\` - Learn about me
 • \`experience\` - View my experience
 • \`skills\` - See my technical skills
 • \`achievements\` - View my achievements
-• \`research\` - Explore my research
 • \`projects\` - Browse my projects
 • \`contact\` - Get in touch`;
       } else {
@@ -727,7 +667,7 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
         type: "assistant",
         content: responseContent,
         section: matchedSection,
-        images: matchedSection ? sectionData[matchedSection as keyof typeof sectionData]?.images : undefined,
+        images: matchedSection ? sectionData[matchedSection]?.images : undefined,
       };
 
       setMessages((prev) => [...prev, assistantMessage]);
@@ -737,27 +677,33 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
     }, 600);
   };
 
-  const handleNewChat = () => {
-    setMessages([{ id: "welcome", type: "assistant", content: welcomeMessage }]);
-  };
 
   return (
-    <div className="flex-1 flex flex-col h-full min-h-0 min-w-0 overflow-x-hidden bg-background">
-      {/* Header */}
-      <div className="flex items-center justify-between pl-12 md:pl-4 pr-4 py-3 border-b border-border flex-shrink-0">
-        <div className="hidden md:flex items-center gap-2">
-          <span className="text-foreground font-medium">ChatGPT</span>
-          <span className="text-muted-foreground text-sm">5.2 ▼</span>
-        </div>
-        <div className="flex items-center gap-2 ml-auto">
-          <button className="p-2 rounded-lg hover:bg-accent transition-colors text-muted-foreground">
-            <p><b>Abhay Agarwal</b></p>
-          </button>
-        </div>
+    <div className="flex-1 flex h-full min-h-0 min-w-0 overflow-hidden bg-background">
+
+      {/* ── Chat column ── */}
+      <div className={`flex flex-col h-full min-h-0 overflow-x-hidden relative transition-all duration-300 ${showResumePanel ? "w-[45%]" : "w-full"}`}>
+
+      {/* View Resume chip — top right */}
+      <div className="absolute top-3 right-4 z-10">
+        <button
+          type="button"
+          onClick={() => { if (showResumePanel) { setShowResumePanel(false); } else { setShowResumePanel(true); onCollapseSidebar(); } }}
+          className="flex items-center gap-2 px-3 py-2 rounded-xl text-muted-foreground hover:text-foreground text-sm transition-all duration-200 md:bg-[#2C2C2A] md:hover:bg-accent md:border md:border-white/10 md:hover:border-orange-700"
+        >
+          <svg viewBox="0 0 24 24" className="hidden md:block w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+          </svg>
+          <span>View Resume</span>
+        </button>
       </div>
 
       {/* Messages Area */}
-      <div ref={chatContainerRef} className="flex-1 overflow-y-auto overflow-x-hidden min-h-0">
+      <div ref={chatContainerRef} className={`overflow-y-auto overflow-x-hidden min-h-0 ${messages.length === 1 ? "md:hidden" : "flex-1"}`}>
 
         {/* Mobile welcome — tech enthusiast edition */}
         {messages.length === 1 && (
@@ -821,13 +767,12 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
                 { label: "Experience",   icon: Briefcase,    section: "experience"   },
                 { label: "Projects",     icon: FolderKanban, section: "projects"     },
                 { label: "Achievements", icon: Trophy,       section: "achievements" },
-                { label: "Research",     icon: FileText,     section: "research"     },
                 { label: "Contact",      icon: Mail,         section: "contact"      },
               ].map((item) => (
                 <button
                   key={item.section}
                   onClick={() => onSectionChange(item.section)}
-                  className="group flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/25 active:scale-95 transition-all duration-200 text-sm text-left col-span-1 last:col-span-2 last:justify-center"
+                  className="group flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/25 active:scale-95 transition-all duration-200 text-sm text-left"
                 >
                   <item.icon className="w-4 h-4 text-white/30 group-hover:text-white/70 transition-colors flex-shrink-0" />
                   <span className="font-medium text-white/50 group-hover:text-white/90 transition-colors">{item.label}</span>
@@ -838,20 +783,12 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
         )}
 
         {/* Desktop layout + mobile conversation view */}
-        <div className={`max-w-3xl mx-auto px-3 md:px-4 py-4 md:py-8 ${messages.length === 1 ? "hidden md:block" : "block"}`}>
-          {messages.length === 1 && (
-            <div className="text-center mb-8">
-              <h1 className="text-3xl font-semibold text-foreground mb-4">
-                What can I help with?
-              </h1>
-            </div>
-          )}
-
+        <div className={`max-w-3xl mx-auto px-3 md:px-4 py-4 md:py-8 ${messages.length === 1 ? "hidden" : "block"}`}>
           <div className="space-y-6">
             {messages.map((message, index) => {
               const isLast = index === messages.length - 1;
               return (
-                <div key={message.id} ref={isLast ? latestMessageRef : undefined} className={message.id === "welcome" ? "hidden md:block" : ""}>
+                <div key={message.id} ref={isLast ? latestMessageRef : undefined} className={message.id === "welcome" ? "hidden" : ""}>
                   <ChatMessage
                     message={message}
                     isLatest={isLast}
@@ -876,33 +813,206 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory }: ChatAreaPr
         </div>
       </div>
 
+      {/* Spacer — pushes input toward center on welcome screen, shrinks away smoothly after first message */}
+      <div
+        className="flex-shrink-0 hidden md:block overflow-hidden"
+        style={{
+          height: messages.length === 1 ? "34vh" : "0px",
+          transition: "height 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+        }}
+      />
+
       {/* Input Area */}
       <div className="px-3 md:px-4 pb-4 md:pb-6 flex-shrink-0">
-        <div className="max-w-3xl mx-auto">
+        <div
+          className="w-full mx-auto"
+          style={{
+            maxWidth: messages.length === 1 ? "672px" : "806px",
+            transition: "max-width 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
+        >
+          {messages.length === 1 && (
+            <h2 className="hidden md:block text-5xl font-normal text-foreground mb-6 text-center" style={{ fontFamily: "'EB Garamond', serif" }}>
+              Golden Hour Thinking
+            </h2>
+          )}
           <form onSubmit={handleSubmit}>
-            <div className="chat-input-container">
+            <div className={`chat-input-container ${messages.length > 1 ? "chat-input-compact" : ""} ${inputValue.trim() ? "chat-input-active border border-orange-700" : "border border-transparent"}`}>
               <input
                 ref={inputRef}
                 type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                placeholder="Ask anything"
-                className="flex-1 bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground text-sm"
+                placeholder="What you want to Know about me?"
+                className="w-full bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground text-base px-4 pt-4"
               />
-              <button
-                type="submit"
-                disabled={!inputValue.trim()}
-                className="p-1.5 rounded-full bg-muted hover:bg-accent transition-colors text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed border-2 border-muted-foreground/40"
-              >
-                <ArrowUp className="w-4 h-4" />
-              </button>
+              {/* Bottom bar */}
+              <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between px-3 pb-3">
+                {/* Left: + button */}
+                <button
+                  type="button"
+                  className="p-1.5 rounded-full hover:bg-accent transition-colors text-white"
+                >
+                  <Plus className="w-5 h-5" />
+                </button>
+
+                {/* Right: model selector + mic + wave send */}
+                <div className="flex items-center gap-2">
+                  {/* Model dropdown */}
+                  <button
+                    type="button"
+                    className="flex items-center gap-1 px-2 py-1 rounded-lg hover:bg-accent transition-colors text-muted-foreground text-sm"
+                  >
+                    <span>Claude sonnet 4.5</span>
+                    <ChevronDown className="w-3 h-3" />
+                  </button>
+
+                  {/* Mic */}
+                  <button
+                    type="button"
+                    className="p-1.5 rounded-full hover:bg-accent transition-colors text-white"
+                  >
+                    <Mic className="w-5 h-5" />
+                  </button>
+
+                  {/* Wave / Send */}
+                  <button
+                    type="submit"
+                    disabled={!inputValue.trim()}
+                    className={`p-1.5 rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-end gap-[2px] h-8 w-8 justify-center ${inputValue.trim() ? "bg-orange-500 hover:bg-orange-600" : "bg-transparent"}`}
+                  >
+                    {inputValue.trim() ? (
+                      <ArrowUp className="w-5 h-5 text-white" />
+                    ) : (
+                      <>
+                        <span className="w-[2px] rounded-full bg-white" style={{ height: "8px" }} />
+                        <span className="w-[2px] rounded-full bg-white" style={{ height: "14px" }} />
+                        <span className="w-[2px] rounded-full bg-white" style={{ height: "10px" }} />
+                        <span className="w-[2px] rounded-full bg-white" style={{ height: "16px" }} />
+                        <span className="w-[2px] rounded-full bg-white" style={{ height: "8px" }} />
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
           </form>
-          <p className="hidden md:block text-xs text-center text-muted-foreground mt-3">
-            Type a command to explore my portfolio. Try "about", "skills", or "projects"!
-          </p>
+
+          {/* Social chips */}
+          <div className="flex items-center justify-center gap-2 mt-3 flex-wrap">
+            {[
+              {
+                label: "LinkedIn",
+                url: "https://www.linkedin.com/in/abhay-agarwal-8563352b1/",
+                icon: (
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="#0A66C2">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                ),
+              },
+              {
+                label: "GitHub",
+                url: "https://github.com/Abhay030405",
+                icon: (
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="#ffffff">
+                    <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+                  </svg>
+                ),
+              },
+              {
+                label: "CodeForces",
+                url: "https://codeforces.com/profile/absolutabhay",
+                icon: (
+                  <svg viewBox="0 0 24 24" className="w-4 h-4">
+                    <path d="M4.5 7.5A1.5 1.5 0 016 9v10.5a1.5 1.5 0 01-3 0V9a1.5 1.5 0 011.5-1.5z" fill="#EE3A3A"/>
+                    <path d="M10.5 3A1.5 1.5 0 0112 4.5v15a1.5 1.5 0 01-3 0v-15A1.5 1.5 0 0110.5 3z" fill="#1F8ACB"/>
+                    <path d="M16.5 10.5A1.5 1.5 0 0118 12v7.5a1.5 1.5 0 01-3 0V12a1.5 1.5 0 011.5-1.5z" fill="#EE3A3A"/>
+                  </svg>
+                ),
+              },
+              {
+                label: "LeetCode",
+                url: "https://leetcode.com/u/absolutabhay/",
+                icon: (
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="#FFA116">
+                    <path d="M13.483 0a1.374 1.374 0 00-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 00-1.209 2.104 5.35 5.35 0 00-.125.513 5.527 5.527 0 00.062 2.362 5.83 5.83 0 00.349 1.017 5.938 5.938 0 001.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 00-1.951-.003l-2.396 2.392a3.021 3.021 0 01-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 01.066-.523 2.545 2.545 0 01.619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 00-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0013.483 0zm-2.866 12.815a1.38 1.38 0 00-1.38 1.382 1.38 1.38 0 001.38 1.382H20.79a1.38 1.38 0 001.38-1.382 1.38 1.38 0 00-1.38-1.382z"/>
+                  </svg>
+                ),
+              },
+              {
+                label: "Kaggle",
+                url: "https://www.kaggle.com/abhayondata",
+                icon: (
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="#20BEFF">
+                    <path d="M18.825 23.859c-.022.092-.117.141-.281.141h-3.139c-.187 0-.351-.082-.492-.248l-5.178-6.589-1.448 1.374v5.111c0 .235-.117.352-.351.352H5.505c-.236 0-.354-.117-.354-.352V.353c0-.233.118-.353.354-.353h2.431c.234 0 .351.12.351.353v14.343l6.203-6.272c.165-.165.33-.246.495-.246h3.239c.144 0 .236.06.28.18.022.098-.02.18-.14.26l-6.851 6.827 7.157 8.488c.094.14.12.227.095.319z"/>
+                  </svg>
+                ),
+              },
+            ].map((chip) => (
+              <button
+                key={chip.label}
+                type="button"
+                onClick={() => window.open(chip.url, "_blank", "noopener,noreferrer")}
+                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#2C2C2A] hover:bg-accent border border-white/10 hover:border-orange-700 text-muted-foreground hover:text-foreground text-sm transition-all duration-200"
+              >
+                {chip.icon}
+                <span className="hidden md:inline">{chip.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
+
+      {/* ── close chat column ── */}
+      </div>
+
+      {/* ── Resume panel ── */}
+      {showResumePanel && (
+        <div className="flex flex-col h-full border-l border-border flex-1 min-w-0">
+          {/* Panel header */}
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-border bg-[#1C1C1B] flex-shrink-0">
+            <div className="flex items-center gap-2 text-sm text-foreground font-medium">
+              <svg viewBox="0 0 24 24" className="w-4 h-4 text-muted-foreground" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+              </svg>
+              <span>Abhay Agarwal — Resume</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                onClick={() => window.open("/resume_abhay.pdf", "_blank", "noopener,noreferrer")}
+                className="p-1.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+                title="Open in new tab"
+              >
+                <ExternalLink className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => { const a = document.createElement("a"); a.href = "/resume_abhay.pdf"; a.download = "Abhay_Agarwal_Resume.pdf"; a.click(); }}
+                className="p-1.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+                title="Download"
+              >
+                <Download className="w-4 h-4" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setShowResumePanel(false)}
+                className="p-1.5 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+                title="Close"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          {/* Panel body — embedded resume */}
+          <div className="flex-1 overflow-hidden">
+            <ResumeViewer />
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
