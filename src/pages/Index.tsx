@@ -1,13 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Sidebar from "@/components/portfolio/Sidebar";
 import ChatArea from "@/components/portfolio/ChatArea";
 
+const DEFAULT_RECENTS = [
+  "Tell me about Abhay Agarwal and his background",
+  "Give me a full skills overview of his tech stack",
+  "Walk me through his professional experience and journey",
+  "How can I get in touch or contact him directly",
+  "Take me on a deep dive into his personal projects",
+  "What are some of his biggest achievements and awards",
+];
+
 const Index = () => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
-  const [chatHistory, setChatHistory] = useState<string[]>([]);
+  const [chatHistory, setChatHistory] = useState<string[]>(DEFAULT_RECENTS);
   const [chatKey, setChatKey] = useState(0);
   const [containerHeight, setContainerHeight] = useState<string>("100dvh");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const instantSectionRef = useRef(false);
 
   // Visual Viewport API — keeps layout above keyboard on iOS Safari
   useEffect(() => {
@@ -33,10 +43,6 @@ const Index = () => {
     setChatKey((prev) => prev + 1);
   };
 
-  const handleSelectSection = (section: string) => {
-    setActiveSection(section);
-  };
-
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
   };
@@ -53,6 +59,7 @@ const Index = () => {
     const matched = knownSections.find((key) => chatId.toLowerCase().includes(key));
     if (matched) {
       // Reset to null first so useEffect in ChatArea always fires, even for the same section
+      instantSectionRef.current = true;
       setActiveSection(null);
       setTimeout(() => setActiveSection(matched), 10);
     }
@@ -62,8 +69,6 @@ const Index = () => {
     <div className="flex overflow-hidden bg-background" style={{ height: containerHeight }}>
       <Sidebar
         onNewChat={handleNewChat}
-        onSelectSection={handleSelectSection}
-        activeSection={activeSection}
         chatHistory={chatHistory}
         onSelectChat={handleSelectChat}
         isCollapsed={sidebarCollapsed}
@@ -75,6 +80,7 @@ const Index = () => {
         onSectionChange={handleSectionChange}
         onAddToHistory={handleAddToHistory}
         onCollapseSidebar={() => setSidebarCollapsed(true)}
+        instantSectionRef={instantSectionRef}
       />
     </div>
   );

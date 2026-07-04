@@ -4,36 +4,21 @@ import {
   Search,
   PanelLeftClose,
   PanelLeftOpen,
-  User,
-  Briefcase,
-  Code,
-  Trophy,
-  FolderKanban,
-  Mail,
+  SlidersHorizontal,
+  MoreVertical,
 } from "lucide-react";
 
 interface SidebarProps {
   onNewChat: () => void;
-  onSelectSection: (section: string) => void;
-  activeSection: string | null;
   chatHistory: string[];
   onSelectChat: (chatId: string) => void;
   isCollapsed: boolean;
   onCollapsedChange: (collapsed: boolean) => void;
 }
 
-const portfolioSections = [
-  { id: "about", label: "About Me", icon: User },
-  { id: "experience", label: "My Experience", icon: Briefcase },
-  { id: "skills", label: "My Skills", icon: Code },
-  { id: "achievements", label: "My Achievements", icon: Trophy },
-  { id: "projects", label: "My Projects", icon: FolderKanban },
-  { id: "contact", label: "Contact Me", icon: Mail },
-];
-
-
-const Sidebar = ({ onNewChat, onSelectSection, activeSection, chatHistory, onSelectChat, isCollapsed, onCollapsedChange }: SidebarProps) => {
+const Sidebar = ({ onNewChat, chatHistory, onSelectChat, isCollapsed, onCollapsedChange }: SidebarProps) => {
   const setIsCollapsed = onCollapsedChange;
+  const [selectedRecent, setSelectedRecent] = useState<number | null>(null);
 
   useEffect(() => {
     if (typeof window !== "undefined" && window.innerWidth < 768) {
@@ -139,35 +124,41 @@ const Sidebar = ({ onNewChat, onSelectSection, activeSection, chatHistory, onSel
             </button>
           </div>
 
-          {/* Your Chats Section */}
+          {/* Recents Section */}
           <div className="flex-1 overflow-y-auto px-3">
-            <div className="text-xs text-sidebar-muted px-3 py-2 font-medium">Your chats</div>
-            <div className="space-y-0.5">
-              {portfolioSections.map((section) => (
-                <button
-                  key={section.id}
-                  onClick={() => onSelectSection(section.id)}
-                  className={`section-link w-full ${activeSection === section.id ? "bg-sidebar-accent" : ""}`}
-                >
-                  <section.icon className="w-4 h-4 flex-shrink-0" />
-                  <span className="truncate">{section.label}</span>
-                </button>
-              ))}
-            </div>
-
             {chatHistory.length > 0 && (
               <>
-                <div className="text-xs text-sidebar-muted px-3 py-2 mt-4 font-medium">Recent</div>
-                <div className="space-y-0.5">
-                  {chatHistory.map((chat, index) => (
-                    <button
-                      key={index}
-                      onClick={() => onSelectChat(chat)}
-                      className="section-link w-full"
-                    >
-                      <span className="truncate">{chat}</span>
-                    </button>
-                  ))}
+                <div className="flex items-center justify-between px-3 py-2">
+                  <span className="text-sm text-sidebar-muted font-medium">Recents</span>
+                  <button className="p-1 rounded-md hover:bg-sidebar-accent text-sidebar-muted transition-colors">
+                    <SlidersHorizontal className="w-4 h-4" />
+                  </button>
+                </div>
+                <div>
+                  {chatHistory.map((chat, index) => {
+                    const isSelected = selectedRecent === index;
+                    return (
+                      <button
+                        key={index}
+                        onClick={() => {
+                          setSelectedRecent(index);
+                          onSelectChat(chat);
+                        }}
+                        className={`group w-full flex items-center justify-between gap-2 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                          isSelected
+                            ? "bg-[#121212] text-white"
+                            : "text-sidebar-foreground/80 hover:bg-[#121212] hover:text-white"
+                        }`}
+                      >
+                        <span className="truncate">{chat}</span>
+                        <MoreVertical
+                          className={`w-4 h-4 flex-shrink-0 transition-opacity ${
+                            isSelected ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                          }`}
+                        />
+                      </button>
+                    );
+                  })}
                 </div>
               </>
             )}

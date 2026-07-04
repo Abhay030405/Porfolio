@@ -9,6 +9,7 @@ interface Message {
   content: string;
   section?: string;
   images?: string[];
+  instant?: boolean;
 }
 
 interface ChatAreaProps {
@@ -16,6 +17,7 @@ interface ChatAreaProps {
   onSectionChange: (section: string) => void;
   onAddToHistory: (query: string) => void;
   onCollapseSidebar: () => void;
+  instantSectionRef?: React.MutableRefObject<boolean>;
 }
 
 const sectionData: Record<string, { title: string; content: string; images?: string[] }> = {
@@ -539,7 +541,7 @@ const stripNavFooter = (content: string) => {
   return idx === -1 ? content : content.slice(0, idx);
 };
 
-const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSidebar }: ChatAreaProps) => {
+const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSidebar, instantSectionRef }: ChatAreaProps) => {
   const [messages, setMessages] = useState<Message[]>([
     { id: "welcome", type: "assistant", content: welcomeMessage },
   ]);
@@ -624,12 +626,15 @@ const ChatArea = ({ activeSection, onSectionChange, onAddToHistory, onCollapseSi
       setTimeout(() => scrollToMessage(), 100);
 
       setTimeout(() => {
+        const instant = instantSectionRef?.current ?? false;
+        if (instantSectionRef) instantSectionRef.current = false;
         const assistantMessage: Message = {
           id: (Date.now() + 1).toString(),
           type: "assistant",
           content: stripNavFooter(sectionData[activeSection].content),
           section: activeSection,
           images: sectionData[activeSection].images,
+          instant,
         };
         setMessages((prev) => [...prev, assistantMessage]);
         setIsTyping(false);

@@ -16,6 +16,7 @@ interface Message {
   content: string;
   section?: string;
   images?: string[];
+  instant?: boolean;
 }
 
 interface ChatMessageProps {
@@ -28,14 +29,14 @@ const CHARS_PER_SECOND = 400;
 
 const ChatMessage = ({ message, isLatest = false, onSectionChange }: ChatMessageProps) => {
   const [displayedContent, setDisplayedContent] = useState(
-    message.type === "assistant" && isLatest ? "" : message.content
+    message.type === "assistant" && isLatest && !message.instant ? "" : message.content
   );
   const [streamDone, setStreamDone] = useState(
-    !(message.type === "assistant" && isLatest)
+    !(message.type === "assistant" && isLatest && !message.instant)
   );
 
   useEffect(() => {
-    if (message.type !== "assistant" || !isLatest) {
+    if (message.type !== "assistant" || !isLatest || message.instant) {
       setDisplayedContent(message.content);
       setStreamDone(true);
       return;
@@ -262,21 +263,28 @@ const ChatMessage = ({ message, isLatest = false, onSectionChange }: ChatMessage
           className="text-[14px] md:text-[15px] leading-relaxed w-full overflow-hidden"
           dangerouslySetInnerHTML={{ __html: formatContent(displayedContent) }}
         />
-        {/* Navigation chips — mobile only, appear after streaming finishes */}
-        {isLatest && streamDone && onSectionChange && (
-          <div className="md:hidden mt-6 grid grid-cols-2 gap-2 w-full max-w-xs mx-auto">
-            {NAV_CHIPS.map((item) => (
-              <button
-                key={item.section}
-                onClick={() => onSectionChange(item.section)}
-                className="group flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/25 active:scale-95 transition-all duration-200 text-sm text-left col-span-1 last:col-span-2 last:justify-center"
-              >
-                <item.icon className="w-4 h-4 text-white/30 group-hover:text-white/70 transition-colors flex-shrink-0" />
-                <span className="font-medium text-white/50 group-hover:text-white/90 transition-colors">{item.label}</span>
-              </button>
-            ))}
-          </div>
-        )}
+        {/* Navigation chips — appear after streaming finishes */}
+        {isLatest && streamDone && onSectionChange && (() => {
+          const visibleChips = NAV_CHIPS.filter((item) => item.section !== message.section);
+          const isOdd = visibleChips.length % 2 === 1;
+          return (
+            <div className="mt-6 grid grid-cols-2 gap-2 w-full max-w-xs mx-auto md:flex md:flex-row md:flex-wrap md:justify-center md:max-w-none">
+              {visibleChips.map((item, index) => {
+                const isDanglingLast = isOdd && index === visibleChips.length - 1;
+                return (
+                  <button
+                    key={item.section}
+                    onClick={() => onSectionChange(item.section)}
+                    className={`group flex items-center gap-2 px-4 py-3 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/25 active:scale-95 transition-all duration-200 text-sm text-left ${isDanglingLast ? "col-span-2 justify-center" : "col-span-1"}`}
+                  >
+                    <item.icon className="w-4 h-4 text-white/30 group-hover:text-white/70 transition-colors flex-shrink-0" />
+                    <span className="font-medium text-white/50 group-hover:text-white/90 transition-colors">{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          );
+        })()}
       </div>
     </div>
   );
