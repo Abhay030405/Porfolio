@@ -1,4 +1,3 @@
-import AboutLevel0 from "../AboutLevel0";
 import type {
   AboutContent,
   AchievementsContent,
@@ -9,6 +8,7 @@ import type {
   ToolName,
 } from "@/portfolio/types";
 import ToolTrace, { type Trace } from "./ToolTrace";
+import AboutAnswer from "./AboutAnswer";
 import ExperienceAnswer from "./ExperienceAnswer";
 import SkillsAnswer from "./SkillsAnswer";
 import AchievementsAnswer from "./AchievementsAnswer";
@@ -57,9 +57,7 @@ const ToolAnswer = ({ tool, data, trace, animate = false, onOpenCaseStudy, onOpe
   <div className="w-full">
     {trace && <ToolTrace tool={tool} summary={summarize(tool, data)} {...trace} />}
     {tool === "about" ? (
-      <div className={animate ? "animate-fade-in" : undefined}>
-        <AboutLevel0 data={data as AboutContent} />
-      </div>
+      <AboutAnswer data={data as AboutContent} animate={animate} />
     ) : tool === "experience" ? (
       <ExperienceAnswer data={data as ExperienceContent} animate={animate} />
     ) : tool === "skills" ? (

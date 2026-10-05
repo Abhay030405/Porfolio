@@ -94,10 +94,11 @@ If the backend is unreachable the chat says so — there is no bundled fallback.
 Adding a seventh tool means: a template in both schema files, a tool in
 `Backend/src/chat/tools.ts`, and a case in `toAnswer`.
 
-Rich sections escape the string format by rendering dedicated components:
-`AboutLevel0` (from `ChatMessage`, driven by the About template),
-`CampaignXProject` and `ResumeViewer` (from `ChatArea`). Follow that pattern
-when a section needs real layout rather than formatted text.
+Every tool has its own answer component in `answers/` (`AboutAnswer`,
+`ExperienceAnswer`, …), all built from `primitives.tsx` so they read as one
+family — add new answer layouts the same way rather than with one-off fonts or
+styles. `CampaignXProject` and `ResumeViewer` (opened from `ChatArea`) are the
+remaining hand-built panels.
 
 ### State
 

@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
-import { User, Code, Briefcase, FolderKanban, Trophy, Mail } from "lucide-react";
 import ToolAnswer from "./answers/ToolAnswer";
 import type { Trace } from "./answers/ToolTrace";
 import type { ToolName } from "@/portfolio/types";
 
-const NAV_CHIPS = [
-  { label: "About Me",     icon: User,         section: "about"        },
-  { label: "Skills",       icon: Code,         section: "skills"       },
-  { label: "Experience",   icon: Briefcase,    section: "experience"   },
-  { label: "Projects",     icon: FolderKanban, section: "projects"     },
-  { label: "Achievements", icon: Trophy,       section: "achievements" },
-  { label: "Contact",      icon: Mail,         section: "contact"      },
+/** Follow-up topics listed under an answer, minus the one just shown. */
+const MORE_TOPICS = [
+  { label: "About me - who I am and what drives me",     section: "about"        },
+  { label: "Experience - roles, teams and what I built", section: "experience"   },
+  { label: "Skills - languages, frameworks and tools I use", section: "skills"   },
+  { label: "Achievements - milestones and recognition so far", section: "achievements" },
+  { label: "Projects - things I've designed and shipped", section: "projects"    },
+  { label: "Contact - the best ways to reach me",       section: "contact"      },
 ];
 
 interface Message {
@@ -296,32 +296,29 @@ const ChatMessage = ({ message, isLatest = false, onSectionChange, onOpenProject
             dangerouslySetInnerHTML={{ __html: formatContent(displayedContent) }}
           />
         )}
-        {/* Navigation chips — appear after the answer has landed */}
-        {isLatest && streamDone && onSectionChange && (() => {
-          const visibleChips = NAV_CHIPS.filter((item) => item.section !== message.section);
-          const isOdd = visibleChips.length % 2 === 1;
-          return (
-            <div
-              className={`mt-8 grid grid-cols-2 gap-2 w-full max-w-xs mx-auto md:flex md:flex-row md:flex-wrap md:justify-start md:max-w-none ${
-                animate && toolAnswer ? "animate-fade-in [animation-delay:500ms] [animation-fill-mode:both]" : ""
-              }`}
-            >
-              {visibleChips.map((item, index) => {
-                const isDanglingLast = isOdd && index === visibleChips.length - 1;
-                return (
+        {/* "Know more" — the other topics, listed like a reply's sources once the answer has landed */}
+        {isLatest && streamDone && onSectionChange && (
+          <div
+            className={`mt-6 font-serif text-[1rem] md:text-[1.0625rem] leading-[1.75] ${
+              animate && toolAnswer ? "animate-fade-in [animation-delay:500ms] [animation-fill-mode:both] motion-reduce:animate-none" : ""
+            }`}
+          >
+            <p className="text-foreground">Want to know more?</p>
+            <ul className="mt-2 space-y-1 pl-6">
+              {MORE_TOPICS.filter((item) => item.section !== message.section).map((item) => (
+                <li key={item.section} className="list-disc pl-1 marker:text-muted-foreground">
                   <button
-                    key={item.section}
+                    type="button"
                     onClick={() => onSectionChange(item.section)}
-                    className={`group flex items-center gap-2 px-3.5 py-2 rounded-full border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] hover:border-white/20 active:scale-95 transition-all duration-200 text-[0.8125rem] text-left ${isDanglingLast ? "col-span-2 justify-center" : "col-span-1"}`}
+                    className="text-left text-[#7AA7FF] underline decoration-[#7AA7FF]/40 underline-offset-[0.2em] hover:decoration-[#7AA7FF] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AA7FF]/40 rounded-sm"
                   >
-                    <item.icon className="w-3.5 h-3.5 text-white/35 group-hover:text-white/70 transition-colors flex-shrink-0" />
-                    <span className="text-white/55 group-hover:text-white/90 transition-colors">{item.label}</span>
+                    {item.label}
                   </button>
-                );
-              })}
-            </div>
-          );
-        })()}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </div>
   );
