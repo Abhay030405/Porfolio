@@ -26,8 +26,8 @@ export const env = {
 
   // AI drafts; without a key the admin pages still work in hand-written mode
   OPENROUTER_API_KEY: process.env.OPENROUTER_API_KEY ?? "",
-  OPENROUTER_MODEL: process.env.OPENROUTER_MODEL ?? "anthropic/claude-sonnet-5.5",
+  OPENROUTER_MODEL: process.env.OPENROUTER_MODEL ?? "deepseek/deepseek-v4-flash",
 
-  // Chat routing; without a key /api/route answers 503 and the frontend falls back
+  // Jev picks the chat tool; without a key, keyword matching picks it instead
   TYPESAFE_API_KEY: process.env.TYPESAFE_API_KEY ?? "",
 };

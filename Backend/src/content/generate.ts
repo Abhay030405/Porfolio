@@ -89,13 +89,58 @@ export async function generateDraft({ kind, current, documentText, previousDraft
       candidate = undefined;
     }
     const result = SCHEMAS[kind].safeParse(candidate);
-    if (result.success) return result.data;
+    if (result.success) return keepPublishedItems(kind, current, result.data);
     if (attempt >= 1) throw new GenerationError("The AI returned content that doesn't fit the template");
     messages.push(
       { role: "assistant", content: raw },
       { role: "user", content: `That JSON is invalid: ${result.error?.message ?? "not parseable"}. Return corrected JSON only.` },
     );
   }
+}
+
+/*
+ * Models sometimes "update" a list section by returning only the new item,
+ * which would quietly delete everything already published. So any published
+ * item the draft dropped is put back where it was: a draft can add or change
+ * items, but removing one is a human decision, made in the editor.
+ */
+type Item = Record<string, unknown>;
+const LIST_IDENTITY: Partial<Record<Kind, { list: string; id: (item: Item) => unknown[] }[]>> = {
+  experience: [{ list: "entries", id: (e) => [e.title, e.organization] }],
+  achievements: [{ list: "entries", id: (e) => [e.title] }],
+  skills: [
+    { list: "languages", id: (l) => [l.name] },
+    { list: "groups", id: (g) => [g.heading] },
+  ],
+};
+
+const identity = (parts: unknown[]) => parts.map((p) => String(p ?? "").trim().toLowerCase()).join("|");
+
+function keepPublishedItems<T>(kind: Kind, current: unknown, draft: T): T {
+  const rules = LIST_IDENTITY[kind];
+  if (!rules || !current) return draft;
+  const out = { ...(draft as Item) };
+  for (const { list, id } of rules) {
+    const before = ((current as Item)[list] ?? []) as Item[];
+    const after = [...((out[list] ?? []) as Item[])];
+    const indexOf = (item: Item) => after.findIndex((a) => identity(id(a)) === identity(id(item)));
+    before.forEach((item, i) => {
+      if (indexOf(item) >= 0) return;
+      // Slot it in after the nearest earlier published item that survived, else at the end
+      let position = after.length;
+      for (let j = i - 1; j >= 0; j--) {
+        const found = indexOf(before[j]);
+        if (found >= 0) {
+          position = found + 1;
+          break;
+        }
+      }
+      after.splice(position, 0, item);
+      console.log(`[generate] ${kind}: restored dropped ${list} item "${identity(id(item))}"`);
+    });
+    out[list] = after;
+  }
+  return out as T;
 }
 
 async function callOpenRouter(kind: Kind, messages: { role: string; content: string }[]): Promise<string> {
