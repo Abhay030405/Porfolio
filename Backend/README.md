@@ -80,8 +80,9 @@ session). The session cookie is `httpOnly`, `Secure`, `SameSite=Lax`, scoped to
 
 ## Deployment
 
-Serve the API at `api.itsabhay.me` and `api.abhay.si` — the frontend derives
-the API host from its own domain, and a same-site API is what lets the session
-cookie work. Add every site origin to `ALLOWED_ORIGINS`. It needs a long-running
-Node host (Render, Railway, Fly, a VPS…). In development, Vite proxies `/api`
-to `http://localhost:3000`.
+Deployed on Railway (root directory `/Backend`, start `npm start`, pre-deploy
+`npm run migrate`, healthcheck `/health`) at **`https://api.abhay.si`** — the
+one custom domain the plan allows. Both sites call it; add every site origin to
+`ALLOWED_ORIGINS`. The session cookie is only sent same-site, so admin login
+works from abhay.si, while itsabhay.me serves the public site only. In
+development, Vite proxies `/api` to `http://localhost:3000`.

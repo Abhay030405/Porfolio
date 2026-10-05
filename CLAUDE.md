@@ -146,9 +146,10 @@ paths like `/commandnest.png`.
 
 ## Deployment
 
-The frontend calls the API at `api.<its own domain>` (itsabhay.me →
-api.itsabhay.me, abhay.si → api.abhay.si) unless `VITE_API_BASE_URL` is set;
-on localhost Vite proxies `/api` to port 3000.
+The frontend calls the API at `https://api.abhay.si` (Railway) from every
+domain, unless `VITE_API_BASE_URL` is set; on localhost Vite proxies `/api` to
+port 3000. Admin login only works from abhay.si — the session cookie is
+same-site with the API.
 
 The site builds to `Frontend/dist` and is deployed as a static site. Because the
 app moved from the repository root into `Frontend/`, the hosting provider's
