@@ -1,0 +1,51 @@
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { lazy, Suspense } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+import ProvenLane from "./pages/ProvenLane";
+import Switchboard from "./pages/Switchboard";
+import NotFound from "./pages/NotFound";
+import { ADMIN_ROUTES, adminPath } from "./admin/adminRoutes";
+
+// Admin pages load on demand, so visitors never download the editor
+const AdminPage = lazy(() => import("./pages/AdminPage"));
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          {/* Same Index element on these routes, so the chat survives opening a project */}
+          <Route path="/projects" element={<Index />} />
+          <Route path="/project/:slug" element={<Index />} />
+          <Route path="/project/provenlane" element={<ProvenLane />} />
+          <Route path="/project/switchboard" element={<Switchboard />} />
+          {/* Private admin pages — the backend enforces the login */}
+          {ADMIN_ROUTES.map(({ code, kind }) => (
+            <Route
+              key={code}
+              path={adminPath(code)}
+              element={
+                <Suspense fallback={null}>
+                  <AdminPage kind={kind} />
+                </Suspense>
+              }
+            />
+          ))}
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;

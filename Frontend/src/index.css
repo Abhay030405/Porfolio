@@ -1,0 +1,261 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=EB+Garamond:wght@400;500;600&family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ChatGPT-style Design System */
+
+@layer base {
+  :root {
+    /* #151515 */
+    --background: 0 0% 8.2%;
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 0 0% 95%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 0% 22%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 17%;
+    --input: 60 2% 17%;
+    --ring: 0 0% 40%;
+
+    --radius: 0.75rem;
+
+    /* Brand accent — #C6613F */
+    --brand: 15 54% 51%;
+
+    /* #111111 */
+    --sidebar-background: 0 0% 6.7%;
+    --sidebar-foreground: 53 4.5% 64%; /* #A7A69F */
+    --sidebar-primary: 0 0% 95%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 0% 40%;
+    --sidebar-muted: 0 0% 55%;
+
+    /* Custom ChatGPT-style tokens */
+    --chat-input: 0 0% 18%;
+    --chat-input-border: 0 0% 28%;
+    --chat-hover: 0 0% 22%;
+    --chat-active: 0 0% 25%;
+    --new-chat-bg: 0 0% 95%;
+    --new-chat-fg: 0 0% 9%;
+    --icon-muted: 0 0% 70%;
+  }
+
+  .dark {
+    /* #151515 */
+    --background: 0 0% 8.2%;
+    --foreground: 0 0% 95%;
+
+    --card: 0 0% 10%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 0 0% 95%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 18%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 18%;
+    --muted-foreground: 0 0% 65%;
+
+    --accent: 0 0% 22%;
+    --accent-foreground: 0 0% 95%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 17%;
+    --input: 60 2% 17%;
+    --ring: 0 0% 40%;
+
+    /* #111111 */
+    --sidebar-background: 0 0% 6.7%;
+    --sidebar-foreground: 53 4.5% 64%; /* #A7A69F */
+    --sidebar-primary: 0 0% 95%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 0 0% 15%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 15%;
+    --sidebar-ring: 0 0% 40%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  /*
+   * Fluid root font size. Every `rem` in the app scales off this, so the whole
+   * layout gently contracts on phones and settles at the browser default from
+   * ~1024px up. `rem` inside this declaration resolves against the browser's
+   * base size, so a user who has raised it still gets a proportionally larger UI.
+   */
+  html {
+    font-size: clamp(0.9375rem, 0.875rem + 0.25vw, 1rem);
+  }
+
+  html, body {
+    overflow-x: hidden;
+    max-width: 100%;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'General Sans', sans-serif;
+  }
+}
+
+@layer components {
+  .sidebar-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm text-sidebar-foreground hover:bg-sidebar-accent cursor-pointer transition-colors duration-150;
+  }
+
+  .sidebar-item-active {
+    @apply bg-sidebar-accent;
+  }
+
+  /*
+   * Height is driven by a single custom property so the transition has one
+   * target, and it is fluid: it leans on viewport height so the composer never
+   * dominates a short landscape phone, and settles at its full size on desktop.
+   */
+  .chat-input-container {
+    @apply relative flex flex-col bg-input rounded-[0.625rem];
+    --chat-input-height: clamp(6.25rem, 5.25rem + 4vh, 7.875rem);
+    height: var(--chat-input-height);
+    min-height: var(--chat-input-height);
+    max-height: var(--chat-input-height);
+    transition: border-color 0.15s ease, height 0.8s cubic-bezier(0.4, 0, 0.2, 1), min-height 0.8s cubic-bezier(0.4, 0, 0.2, 1), max-height 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .chat-input-container.chat-input-compact {
+    --chat-input-height: clamp(4.75rem, 4.25rem + 2vh, 5.5rem);
+  }
+
+  .section-link {
+    @apply flex items-center gap-3 px-3 py-2 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg cursor-pointer transition-colors truncate;
+  }
+
+  .social-link {
+    @apply flex items-center gap-3 px-3 py-2.5 text-sm text-sidebar-foreground hover:bg-sidebar-accent rounded-lg cursor-pointer transition-colors;
+  }
+
+  .message-bubble {
+    @apply max-w-4xl w-full;
+    min-width: 0;
+  }
+
+  .user-message {
+    @apply bg-secondary px-4 py-3 rounded-2xl;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  .assistant-message {
+    @apply text-foreground leading-relaxed;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    min-width: 0;
+    overflow-x: hidden;
+  }
+
+  .assistant-message * {
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .assistant-message pre {
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+}
+
+/* ── Running border ── */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes spin-border {
+  to { --border-angle: 360deg; }
+}
+
+.running-border-wrap {
+  padding: 0.09375rem;
+  border-radius: 0.75rem;
+  background: conic-gradient(
+    from var(--border-angle),
+    hsl(15 54% 12%) 0%,
+    hsl(15 54% 12%) 78%,
+    hsl(15 54% 30%) 86%,
+    hsl(var(--brand)) 92%,
+    hsl(15 54% 30%) 96%,
+    hsl(15 54% 12%) 100%
+  );
+  animation: spin-border 3s linear infinite;
+}
+
+/* ── Scrollbar — thin mobile-style ── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+*:hover {
+  scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 0.25rem;
+  height: 0.25rem;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 9999px;
+  transition: background 0.2s;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}

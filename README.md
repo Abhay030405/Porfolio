@@ -88,6 +88,16 @@ Designing structured reasoning pipelines where LLMs plan, verify, and refine int
 
 🧠 **Codeforces Rating: 1390 (Pupil)** — 500+ problems solved
 
+## Repository Structure
+
+```
+GPT_Portfolio/
+├── Frontend/     React + TypeScript + Vite portfolio app
+├── Backend/      Reserved for future API services
+├── README.md
+└── CLAUDE.md
+```
+
 ## Running Locally
 
 ### Prerequisites
@@ -101,8 +111,8 @@ Designing structured reasoning pipelines where LLMs plan, verify, and refine int
 # Clone repository
 git clone <YOUR_GIT_URL>
 
-# Enter project folder
-cd <YOUR_PROJECT_NAME>
+# Enter the frontend project
+cd GPT_Portfolio/frontend
 
 # Install dependencies
 npm install
@@ -112,7 +122,7 @@ npm run dev
 ```
 
 Then open:  
-http://localhost:5173
+http://localhost:8080
 
 ## Project Tech
 
