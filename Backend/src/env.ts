@@ -14,7 +14,8 @@ export const env = {
   PORT: Number(process.env.PORT ?? 3000),
   ALLOWED_ORIGINS: (process.env.ALLOWED_ORIGINS ?? "http://localhost:8080")
     .split(",")
-    .map((o) => o.trim())
+    // Browsers send origins without a trailing slash; tolerate one pasted from the address bar
+    .map((o) => o.trim().replace(/\/+$/, ""))
     .filter(Boolean),
   IS_PRODUCTION: process.env.NODE_ENV === "production",
 
