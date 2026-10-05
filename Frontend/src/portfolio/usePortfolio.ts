@@ -42,3 +42,9 @@ export function useProjects() {
     [data, isPending],
   );
 }
+
+/** The chat's first message; null when it isn't published or the API is unreachable. */
+export function useWelcome() {
+  const { data, isPending } = usePortfolio();
+  return { welcome: data?.sections.welcome ?? null, isLoading: isPending };
+}

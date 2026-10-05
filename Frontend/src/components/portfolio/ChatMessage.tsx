@@ -1,17 +1,12 @@
 import { useState, useEffect } from "react";
 import ToolAnswer from "./answers/ToolAnswer";
+import WelcomeAnswer from "./answers/WelcomeAnswer";
+import { DEFAULT_TOPICS } from "./answers/welcomeDefaults";
+import { LinkList } from "./answers/primitives";
 import type { Trace } from "./answers/ToolTrace";
-import type { ToolName } from "@/portfolio/types";
+import type { ToolName, WelcomeContent } from "@/portfolio/types";
 
-/** Follow-up topics listed under an answer, minus the one just shown. */
-const MORE_TOPICS = [
-  { label: "About me - who I am and what drives me",     section: "about"        },
-  { label: "Experience - roles, teams and what I built", section: "experience"   },
-  { label: "Skills - languages, frameworks and tools I use", section: "skills"   },
-  { label: "Achievements - milestones and recognition so far", section: "achievements" },
-  { label: "Projects - things I've designed and shipped", section: "projects"    },
-  { label: "Contact - the best ways to reach me",       section: "contact"      },
-];
+type Topic = WelcomeContent["topics"][number];
 
 interface Message {
   id: string;
@@ -32,6 +27,11 @@ interface ChatMessageProps {
   onOpenProject?: () => void;
   /** Opens a project's page — the projects tool lists them from the database. */
   onOpenProjectPage?: (name: string) => void;
+  /** The welcome message's topic links and resume link. */
+  onOpenTopic?: (section: string) => void;
+  onOpenResume?: () => void;
+  /** Listed under the latest answer, minus the one just shown. */
+  topics?: Topic[];
 }
 
 const CHARS_PER_SECOND = 400;
@@ -39,11 +39,21 @@ const CHARS_PER_SECOND = 400;
 const TOOL_NAMES: ToolName[] = ["about", "experience", "skills", "achievements", "projects", "contact"];
 const isToolName = (name: string): name is ToolName => (TOOL_NAMES as string[]).includes(name);
 
-const ChatMessage = ({ message, isLatest = false, onSectionChange, onOpenProject, onOpenProjectPage }: ChatMessageProps) => {
-  // A tool result renders as its own component; plain replies (help, errors) stream as text
+const ChatMessage = ({
+  message,
+  isLatest = false,
+  onSectionChange,
+  onOpenProject,
+  onOpenProjectPage,
+  onOpenTopic,
+  onOpenResume,
+  topics = DEFAULT_TOPICS,
+}: ChatMessageProps) => {
+  // A tool result or the welcome renders as its own component; plain replies (help, errors) stream as text
   const toolAnswer =
     message.section && isToolName(message.section) && message.data !== undefined ? message.section : null;
-  const isCustomSection = toolAnswer !== null;
+  const welcome = message.section === "welcome" && message.data ? (message.data as WelcomeContent) : null;
+  const isCustomSection = toolAnswer !== null || welcome !== null;
 
   const [displayedContent, setDisplayedContent] = useState(
     message.type === "assistant" && isLatest && !message.instant && !isCustomSection ? "" : message.content
@@ -281,7 +291,9 @@ const ChatMessage = ({ message, isLatest = false, onSectionChange, onOpenProject
   return (
     <div className="flex items-start animate-fade-in">
       <div className="message-bubble assistant-message flex-1 min-w-0">
-        {toolAnswer ? (
+        {welcome ? (
+          <WelcomeAnswer data={welcome} animate={animate} onOpenTopic={onOpenTopic} onOpenResume={onOpenResume} />
+        ) : toolAnswer ? (
           <ToolAnswer
             tool={toolAnswer}
             data={message.data}
@@ -297,26 +309,22 @@ const ChatMessage = ({ message, isLatest = false, onSectionChange, onOpenProject
           />
         )}
         {/* "Know more" — the other topics, listed like a reply's sources once the answer has landed */}
-        {isLatest && streamDone && onSectionChange && (
+        {isLatest && streamDone && onSectionChange && !welcome && (
           <div
             className={`mt-6 font-serif text-[1rem] md:text-[1.0625rem] leading-[1.75] ${
               animate && toolAnswer ? "animate-fade-in [animation-delay:500ms] [animation-fill-mode:both] motion-reduce:animate-none" : ""
             }`}
           >
-            <p className="text-foreground">Want to know more?</p>
-            <ul className="mt-2 space-y-1 pl-6">
-              {MORE_TOPICS.filter((item) => item.section !== message.section).map((item) => (
-                <li key={item.section} className="list-disc pl-1 marker:text-muted-foreground">
-                  <button
-                    type="button"
-                    onClick={() => onSectionChange(item.section)}
-                    className="text-left text-[#7AA7FF] underline decoration-[#7AA7FF]/40 underline-offset-[0.2em] hover:decoration-[#7AA7FF] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#7AA7FF]/40 rounded-sm"
-                  >
-                    {item.label}
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <p className="mb-2 text-foreground">Want to know more?</p>
+            <LinkList
+              items={topics
+                .filter((topic) => topic.tool !== message.section)
+                .map((topic) => ({
+                  key: topic.tool + topic.label,
+                  label: topic.description.trim() ? `${topic.label} - ${topic.description}` : topic.label,
+                  onClick: () => onSectionChange(topic.tool),
+                }))}
+            />
           </div>
         )}
       </div>

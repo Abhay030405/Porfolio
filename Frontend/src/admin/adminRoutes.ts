@@ -14,6 +14,7 @@ export const ADMIN_ROUTES: { code: string; kind: ContentKind; label: string }[] 
   { code: "a", kind: "about", label: "About" },
   { code: "h", kind: "achievements", label: "Achievements" },
   { code: "c", kind: "contact", label: "Contact" },
+  { code: "w", kind: "welcome", label: "Welcome" },
 ];
 
 export const adminPath = (code: string) => `${ADMIN_PATH_PREFIX}${code}`;

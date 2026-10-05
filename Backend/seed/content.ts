@@ -365,6 +365,35 @@ export const contact = {
     "I usually respond within 24–48 hours. If your message is thoughtful, it’ll get a thoughtful reply.",
 };
 
+/* ── Welcome ── */
+
+export const welcome = {
+  greeting: "Welcome to Abhay Agarwal's portfolio.",
+  intro: [
+    "I'm **Abhay Agarwal** — an AI engineer from Prayagraj, India, studying Electrical Engineering at MNNIT (Class of 2028). I build the part of an LLM system that decides what happens next: agent graphs, retrieval pipelines, and the APIs around them.",
+    "Most recently I was a Software Development Intern at **EmployLab.ai**, building an HR copilot that answers in under two seconds. Away from work I'm a Codeforces Specialist, and I've placed at hackathons like HACKATRON at IIITM Gwalior.",
+    "This site works like a chat: pick a topic below, or ask me anything in the box.",
+  ],
+  prompt: "What would you like to know?",
+  topics: [
+    { tool: "about", label: "About me", description: "who I am and what drives me" },
+    { tool: "experience", label: "Experience", description: "roles, teams and what I built" },
+    { tool: "projects", label: "Projects", description: "things I've designed and shipped" },
+    { tool: "skills", label: "Skills", description: "languages, frameworks and tools I use" },
+    { tool: "achievements", label: "Achievements", description: "milestones and recognition so far" },
+    { tool: "contact", label: "Contact", description: "the best ways to reach me" },
+  ],
+  resume: { text: "Short on time?", label: "Read my resume" },
+  linksLabel: "Elsewhere:",
+  links: [
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/abhay-agarwal-8563352b1/" },
+    { label: "GitHub", url: "https://github.com/Abhay030405" },
+    { label: "Codeforces", url: "https://codeforces.com/profile/absolutabhay" },
+    { label: "LeetCode", url: "https://leetcode.com/u/absolutabhay/" },
+    { label: "Kaggle", url: "https://www.kaggle.com/abhayondata" },
+  ],
+};
+
 /* ── Projects ── */
 
 const PROJECT_CHATS = [

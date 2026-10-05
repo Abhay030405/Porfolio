@@ -93,6 +93,21 @@ export const contactSchema = z.object({
   closingQuote: text,
 });
 
+/* ── Welcome (the first message in the chat, not a tool) ── */
+export const TOOL_NAMES = ["about", "experience", "skills", "achievements", "projects", "contact"] as const;
+
+export const welcomeSchema = z.object({
+  greeting: text,
+  /** Paragraphs; **bold** and *italic* work. */
+  intro: lines,
+  prompt: text,
+  /** The sections a visitor can open from the welcome; `tool` is one of TOOL_NAMES. */
+  topics: z.array(z.object({ tool: z.enum(TOOL_NAMES), label: text, description: text })),
+  resume: z.object({ text, label: text }),
+  linksLabel: text,
+  links: z.array(z.object({ label: text, url: text })),
+});
+
 /* ── Project (one row per project) ── */
 export const projectSchema = z.object({
   name: z.string().min(1),
@@ -112,11 +127,12 @@ export const SCHEMAS = {
   skills: skillsSchema,
   achievements: achievementsSchema,
   contact: contactSchema,
+  welcome: welcomeSchema,
   project: projectSchema,
 } as const;
 
 export type Kind = keyof typeof SCHEMAS;
-export const SECTION_KINDS = ["about", "experience", "skills", "achievements", "contact"] as const;
+export const SECTION_KINDS = ["about", "experience", "skills", "achievements", "contact", "welcome"] as const;
 export const isKind = (k: string): k is Kind => k in SCHEMAS;
 
 /*

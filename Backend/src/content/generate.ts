@@ -40,6 +40,10 @@ problem and solution are one paragraph each; solution says what was built and ho
 
   contact: `Return the complete Contact section. Update only the contact details and links the document provides.`,
 
+  welcome: `Return the complete Welcome message — the first thing a visitor reads in the chat.
+greeting is one short line. intro is 1–2 short paragraphs: who Abhay is, his role and what he builds. Keep it crisp.
+Keep topics, resume and links as they are unless the document or feedback changes them; topic descriptions stay 5–6 words.`,
+
   project: `Create the project page for the ONE project the document describes.
 - name: the project's name, optionally followed by " — " and a short tagline.
 - description: 1–2 sentences, under 200 characters, for the project card.

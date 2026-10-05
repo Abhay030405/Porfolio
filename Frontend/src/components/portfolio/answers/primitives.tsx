@@ -58,6 +58,43 @@ export const Bullets = ({ items }: { items: string[] }) =>
     </ul>
   ) : null;
 
+/* ── Links ── */
+
+/**
+ * Underlined text link in the brand terracotta, like the sources under a reply.
+ * orange-400 rather than the brand's own 500: the same hue, light enough to
+ * read comfortably as body-size text on the dark background.
+ */
+export const textLink =
+  "text-left text-orange-400 underline decoration-orange-400/40 underline-offset-[0.2em] hover:text-orange-300 hover:decoration-orange-300 transition-colors rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/40";
+
+/** A bulleted list of links; each item opens a URL (`href`) or runs `onClick`. */
+export const LinkList = ({
+  items,
+}: {
+  items: { key: string; label: ReactNode; href?: string; onClick?: () => void }[];
+}) =>
+  items.length ? (
+    <ul className="space-y-1 pl-6">
+      {items.map((item) => (
+        <li
+          key={item.key}
+          className="list-disc pl-1 font-serif text-[1rem] md:text-[1.0625rem] leading-[1.75] marker:text-muted-foreground"
+        >
+          {item.href ? (
+            <a href={item.href} target="_blank" rel="noopener noreferrer" className={textLink}>
+              {item.label}
+            </a>
+          ) : (
+            <button type="button" onClick={item.onClick} className={textLink}>
+              {item.label}
+            </button>
+          )}
+        </li>
+      ))}
+    </ul>
+  ) : null;
+
 /* ── Chips ── */
 
 export const Chip = ({ children, tone = "muted" }: { children: ReactNode; tone?: "muted" | "accent" }) => (

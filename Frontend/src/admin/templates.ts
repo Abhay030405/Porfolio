@@ -207,6 +207,39 @@ export const TEMPLATES: Record<ContentKind, Field[]> = {
     area("closingQuote", "Closing quote", undefined, 2),
   ],
 
+  welcome: [
+    text("greeting", "Greeting", "First line of the chat"),
+    lines("intro", "Intro paragraphs", `One paragraph per line — ${INLINE_HINT}`, 3),
+    text("prompt", "Question", "e.g. What would you like to know?"),
+    {
+      key: "topics",
+      label: "Topics",
+      type: "list",
+      itemLabel: "Topic",
+      titleKey: "label",
+      fields: [
+        text("tool", "Section", "One of: about, experience, skills, achievements, projects, contact"),
+        text("label", "Label"),
+        text("description", "Description", "5–6 words"),
+      ],
+    },
+    {
+      key: "resume",
+      label: "Resume line",
+      type: "object",
+      fields: [text("text", "Text before the link", "e.g. Short on time?"), text("label", "Link label")],
+    },
+    text("linksLabel", "Links label", "e.g. Elsewhere:"),
+    {
+      key: "links",
+      label: "Links",
+      type: "list",
+      itemLabel: "Link",
+      titleKey: "label",
+      fields: [text("label", "Label"), text("url", "URL", "https://… or mailto:…")],
+    },
+  ],
+
   project: [
     text("name", "Project name"),
     area("description", "Description", "1–2 sentences for the card and the project page", 2),

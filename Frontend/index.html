@@ -14,6 +14,106 @@
       href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap"
       rel="stylesheet"
     />
+    <!-- The boot screen's wordmark font, so it's ready before the app's CSS arrives -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet" />
+
+    <!--
+      Boot screen: shown from the first paint of a (re)load until the app has
+      mounted and its first API data has landed — lib/bootLoader.ts fades it
+      out. Plain HTML/CSS so it needs no JavaScript bundle to appear.
+    -->
+    <style>
+      #boot {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #151515;
+        color: #f2f2f2;
+        transition: opacity 420ms ease, visibility 420ms ease;
+      }
+      #boot.boot--done {
+        opacity: 0;
+        visibility: hidden;
+      }
+      #boot .boot-stack {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.125rem;
+        animation: boot-rise 600ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+      }
+      #boot .boot-mark {
+        width: 3rem;
+        height: 3rem;
+        color: #c6613f;
+      }
+      #boot .boot-bubble {
+        stroke-dasharray: 140;
+        stroke-dashoffset: 140;
+        animation: boot-draw 900ms 120ms cubic-bezier(0.65, 0, 0.35, 1) forwards;
+      }
+      #boot .boot-dot {
+        opacity: 0;
+        animation: boot-type 1.2s ease-in-out infinite;
+      }
+      /* The dots start "typing" once the bubble has finished drawing */
+      #boot .boot-dot:nth-of-type(1) { animation-delay: 1050ms; }
+      #boot .boot-dot:nth-of-type(2) { animation-delay: 1200ms; }
+      #boot .boot-dot:nth-of-type(3) { animation-delay: 1350ms; }
+      #boot .boot-name {
+        font-family: "Source Serif 4", Georgia, serif;
+        font-weight: 600;
+        font-size: 1.375rem;
+        letter-spacing: -0.01em;
+      }
+      #boot .boot-line {
+        position: relative;
+        width: 7.5rem;
+        height: 1px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.1);
+      }
+      #boot .boot-line::after {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 0;
+        width: 40%;
+        background: linear-gradient(90deg, transparent, #c6613f, transparent);
+        animation: boot-sweep 1.4s ease-in-out infinite;
+      }
+      #boot .boot-status {
+        min-height: 1.25rem;
+        font-family: "General Sans", system-ui, sans-serif;
+        font-size: 0.8125rem;
+        color: #a6a6a6;
+        transition: opacity 200ms ease;
+      }
+      @keyframes boot-rise {
+        from { opacity: 0; transform: translateY(0.5rem); }
+        to { opacity: 1; transform: none; }
+      }
+      @keyframes boot-draw {
+        to { stroke-dashoffset: 0; }
+      }
+      @keyframes boot-type {
+        0%, 100% { opacity: 0.25; }
+        40% { opacity: 1; }
+      }
+      @keyframes boot-sweep {
+        from { transform: translateX(-100%); }
+        to { transform: translateX(250%); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #boot .boot-stack, #boot .boot-bubble, #boot .boot-dot, #boot .boot-line::after { animation: none; }
+        #boot .boot-bubble { stroke-dashoffset: 0; }
+        #boot .boot-dot { opacity: 0.7; }
+        #boot .boot-line::after { transform: translateX(75%); }
+      }
+    </style>
 
     <meta property="og:title" content="Abhay Agarwal | Portfolio" />
     <meta property="og:description" content="Developer, Researcher, and Problem Solver. Explore my projects, skills, and experience." />
@@ -26,6 +126,43 @@
   </head>
 
   <body>
+    <div id="boot" role="status" aria-live="polite" aria-label="Loading Abhay Agarwal's portfolio">
+      <div class="boot-stack">
+        <!-- A chat bubble drawing itself, then "typing" — the portfolio is a conversation -->
+        <svg class="boot-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <path
+            class="boot-bubble"
+            d="M12 10h24a6 6 0 0 1 6 6v12a6 6 0 0 1-6 6H22l-8 6v-6h-2a6 6 0 0 1-6-6V16a6 6 0 0 1 6-6Z"
+            stroke="currentColor"
+            stroke-width="2.25"
+            stroke-linejoin="round"
+          />
+          <circle class="boot-dot" cx="17" cy="22" r="2.25" fill="currentColor" />
+          <circle class="boot-dot" cx="24" cy="22" r="2.25" fill="currentColor" />
+          <circle class="boot-dot" cx="31" cy="22" r="2.25" fill="currentColor" />
+        </svg>
+        <div class="boot-name">Abhay Agarwal</div>
+        <div class="boot-line"></div>
+        <div class="boot-status" id="boot-status">Opening the portfolio</div>
+      </div>
+    </div>
+    <script>
+      // Cycle the status line until the boot screen is gone
+      (function () {
+        var lines = ["Opening the portfolio", "Fetching projects", "Asking Jev", "Almost there"];
+        var i = 0;
+        var timer = setInterval(function () {
+          var el = document.getElementById("boot-status");
+          if (!el || !document.getElementById("boot")) return clearInterval(timer);
+          if (i >= lines.length - 1) return clearInterval(timer);
+          el.style.opacity = "0";
+          setTimeout(function () {
+            el.textContent = lines[++i];
+            el.style.opacity = "1";
+          }, 200);
+        }, 1100);
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

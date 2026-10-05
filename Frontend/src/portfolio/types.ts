@@ -71,6 +71,18 @@ export interface ContactContent {
   closingQuote: string;
 }
 
+/** The first message in the chat. Not a tool — it points visitors at the tools. */
+export interface WelcomeContent {
+  greeting: string;
+  /** Paragraphs; **bold** and *italic* work. */
+  intro: string[];
+  prompt: string;
+  topics: { tool: ToolName; label: string; description: string }[];
+  resume: { text: string; label: string };
+  linksLabel: string;
+  links: { label: string; url: string }[];
+}
+
 export interface ProjectContent {
   name: string;
   description: string;
@@ -85,6 +97,7 @@ export interface SectionContents {
   skills: SkillsContent;
   achievements: AchievementsContent;
   contact: ContactContent;
+  welcome: WelcomeContent;
 }
 
 export type SectionKind = keyof SectionContents;
@@ -102,7 +115,7 @@ export interface PortfolioResponse {
 
 /* ── Chat tools (Backend/src/chat/tools.ts) ── */
 
-export type ToolName = SectionKind | "projects";
+export type ToolName = Exclude<SectionKind, "welcome"> | "projects";
 
 /** POST /api/chat — `tool` and `data` are null when no tool fits the query. */
 export type ChatResult = { routedBy: "direct" | "jev" | "keywords"; confidence: number | null } & (

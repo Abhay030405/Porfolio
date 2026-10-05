@@ -56,7 +56,7 @@ Note the dev server is on **port 8080**, not Vite's default 5173
 | `/project/:slug`         | `pages/Index.tsx` (project page over the chat)  |
 | `/project/provenlane`    | `pages/ProvenLane`   |
 | `/project/switchboard`   | `pages/Switchboard`  |
-| `/abhay20245003{p,e,s,a,h,c}` | `pages/AdminPage` (lazy) — private editors for projects, experience, skills, about, achievements, contact |
+| `/abhay20245003{p,e,s,a,h,c,w}` | `pages/AdminPage` (lazy) — private editors for projects, experience, skills, about, achievements, contact, welcome |
 | `*`                      | `pages/NotFound`     |
 
 `ProvenLane` and `Switchboard` are placeholder stubs. Custom routes must be
@@ -87,6 +87,13 @@ edited on the admin pages. Every chat answer is a **tool call**:
   resizable split between chat and the project detail panel.
 - **`src/components/portfolio/ChatMessage.tsx`** — renders a single message,
   including the markdown-ish parsing of rendered section strings.
+
+The chat opens with the **welcome** section (`answers/WelcomeAnswer.tsx`):
+greeting, intro, topic links, resume link and outside links, all edited on the
+welcome admin page. It is a section, not a tool — `Index.tsx` reads it from
+`GET /api/portfolio` and its topics also feed the "Want to know more?" list
+under each answer. If it can't load, the chat falls back to a plain text
+welcome.
 
 Outside the chat, the sidebar, projects grid and project pages read published
 projects from `GET /api/portfolio` via `useProjects()` (`portfolio/usePortfolio.ts`).

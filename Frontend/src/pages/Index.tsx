@@ -5,7 +5,7 @@ import ChatArea from "@/components/portfolio/ChatArea";
 import ProjectsPage from "@/components/portfolio/ProjectsPage";
 import ProjectDetailPage from "@/components/portfolio/ProjectDetailPage";
 import { projectSlug } from "@/components/portfolio/sidebarProjects";
-import { useProjects } from "@/portfolio/usePortfolio";
+import { useProjects, useWelcome } from "@/portfolio/usePortfolio";
 
 const DEFAULT_RECENTS = [
   "Tell me about Abhay Agarwal and his background",
@@ -36,6 +36,7 @@ const Index = () => {
   const { slug } = useParams();
   const showProjects = location.pathname === "/projects";
   const { allProjects } = useProjects();
+  const { welcome, isLoading: welcomeLoading } = useWelcome();
   const projectPage = slug ? allProjects.find((p) => projectSlug(p.name) === slug) : undefined;
 
   const showChat = () => {
@@ -131,6 +132,8 @@ const Index = () => {
           resumeSignal={resumeSignal}
           sidebarCollapsed={sidebarCollapsed}
           externalQuery={externalQuery}
+          welcome={welcome}
+          welcomeLoading={welcomeLoading}
         />
         {showProjects && (
           <div className="absolute inset-0 z-30 bg-background">

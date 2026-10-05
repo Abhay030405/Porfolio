@@ -1,8 +1,9 @@
 import { Component, type ReactNode } from "react";
 import ProjectDetailPage from "@/components/portfolio/ProjectDetailPage";
 import ToolAnswer from "@/components/portfolio/answers/ToolAnswer";
+import WelcomeAnswer from "@/components/portfolio/answers/WelcomeAnswer";
 import { toSidebarProject } from "@/portfolio/usePortfolio";
-import type { ContentKind, ProjectContent } from "@/portfolio/types";
+import type { ContentKind, ProjectContent, WelcomeContent } from "@/portfolio/types";
 
 /* Renders content exactly as visitors will see it, using the site's own components. */
 
@@ -19,6 +20,8 @@ const ContentPreview = ({ kind, value }: { kind: ContentKind; value: unknown }) 
           onStartChat={noop}
         />
       </div>
+    ) : kind === "welcome" ? (
+      <WelcomeAnswer data={value as WelcomeContent} />
     ) : (
       // The same component the chat renders the section's tool result with
       <ToolAnswer tool={kind} data={value} />
